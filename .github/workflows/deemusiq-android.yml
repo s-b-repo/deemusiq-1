@@ -1,0 +1,114 @@
+name: Build DeeMusiq (Android APK)
+
+# Builds the DeeMusiq Android APK from the deemusiq-app/ subfolder of this repo.
+#  • Manual:  Actions tab → this workflow → Run workflow
+#  • Release: push a tag like v1.0.0  →  APK is attached to a GitHub Release
+#
+# Signing: a TEMPORARY keystore is auto-generated so the APK installs for testing.
+# For public releases with working updates, add repo secrets KEYSTORE_BASE64,
+# KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD (see deemusiq-app/README.DEEMUSIQ.md).
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+env:
+  FLUTTER_VERSION: "3.35.2"
+  FLUTTER_CHANNEL: "master"
+
+defaults:
+  run:
+    working-directory: deemusiq-app
+
+jobs:
+  android:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2.18.0
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          cache: true
+          git-source: https://github.com/flutter/flutter.git
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "zulu"
+          java-version: "17"
+          cache: "gradle"
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          dart cli/cli.dart install-dependencies --platform=android --arch=all || true
+
+      - name: Generate DeeMusiq icons & splash
+        run: |
+          dart run flutter_launcher_icons -f flutter_launcher_icons.yaml || dart run flutter_launcher_icons
+          dart run flutter_native_splash:create
+
+      - name: Generate code (build_runner)
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Set up signing keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "Using keystore from repository secret (production / update-safe)."
+            echo "$KEYSTORE_BASE64" | base64 -d > android/app/deemusiq.jks
+            KS_PASS="$KEYSTORE_PASSWORD"; ALIAS="$KEY_ALIAS"; K_PASS="$KEY_PASSWORD"
+          else
+            echo "::warning::No KEYSTORE_BASE64 secret — generating a TEMPORARY keystore."
+            echo "::warning::APK installs for testing, but set a permanent keystore secret before public release so future updates install over old versions."
+            KS_PASS="deemusiq"; ALIAS="deemusiq"; K_PASS="deemusiq"
+            keytool -genkeypair -v -keystore android/app/deemusiq.jks -keyalg RSA -keysize 2048 \
+              -validity 10000 -alias "$ALIAS" -storepass "$KS_PASS" -keypass "$K_PASS" \
+              -dname "CN=DeeMusiq, OU=DeeMusiq, O=The Dembe Group, L=KwaZulu-Natal, C=ZA"
+          fi
+          cat > android/key.properties <<EOF
+          storePassword=$KS_PASS
+          keyPassword=$K_PASS
+          keyAlias=$ALIAS
+          storeFile=deemusiq.jks
+          EOF
+
+      - name: Build release APK
+        run: flutter build apk --release --flavor stable
+
+      - name: Collect APK
+        run: |
+          mkdir -p dist
+          src=$(find build -name "*-stable-release.apk" -o -name "*.apk" | head -1)
+          echo "Found APK: $src"
+          cp "$src" dist/DeeMusiq.apk
+          ls -la dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DeeMusiq-apk
+          path: deemusiq-app/dist/DeeMusiq.apk
+          if-no-files-found: error
+
+      - name: Attach to GitHub Release (tag builds only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: deemusiq-app/dist/DeeMusiq.apk
+          name: DeeMusiq ${{ github.ref_name }}
+          body: |
+            DeeMusiq Android app — *It's a drop day.*
+
+            **Install:** download `DeeMusiq.apk`, open it on your Android phone, and
+            allow "install from unknown sources" when prompted.
