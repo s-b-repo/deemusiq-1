@@ -1,10 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/components/ui/button_tile.dart';
-import 'package:spotube/modules/getting_started/blur_card.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/provider/user_preferences/user_preferences_provider.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/components/ui/button_tile.dart';
+import 'package:deemusiq/modules/getting_started/blur_card.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/provider/user_preferences/user_preferences_provider.dart';
 
 class GettingStartedPagePlaybackSection extends HookConsumerWidget {
   final VoidCallback onNext;
@@ -42,7 +42,7 @@ class GettingStartedPagePlaybackSection extends HookConsumerWidget {
           children: [
             Row(
               children: [
-                const Icon(SpotubeIcons.album, size: 16),
+                const Icon(DeeMusiqIcons.album, size: 16),
                 const Gap(8),
                 Text(context.l10n.playback).semiBold().large(),
               ],
@@ -108,14 +108,14 @@ class GettingStartedPagePlaybackSection extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Button.secondary(
-                  leading: const Icon(SpotubeIcons.angleLeft),
+                  leading: const Icon(DeeMusiqIcons.angleLeft),
                   onPressed: onPrevious,
                   child: Text(context.l10n.previous),
                 ),
                 Directionality(
                   textDirection: TextDirection.rtl,
                   child: Button.primary(
-                    leading: const Icon(SpotubeIcons.angleRight),
+                    leading: const Icon(DeeMusiqIcons.angleRight),
                     onPressed: onNext,
                     child: Text(context.l10n.next),
                   ),

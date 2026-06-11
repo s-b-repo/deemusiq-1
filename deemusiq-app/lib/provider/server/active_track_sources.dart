@@ -1,14 +1,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/audio_player/audio_player.dart';
-import 'package:spotube/provider/server/sourced_track_provider.dart';
-import 'package:spotube/services/sourced_track/sourced_track.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/audio_player/audio_player.dart';
+import 'package:deemusiq/provider/server/sourced_track_provider.dart';
+import 'package:deemusiq/services/sourced_track/sourced_track.dart';
 
 final activeTrackSourcesProvider = FutureProvider<
     ({
       SourcedTrack? source,
       SourcedTrackNotifier? notifier,
-      SpotubeTrackObject track,
+      DeeMusiqTrackObject track,
     })?>((ref) async {
   final audioPlayerState = ref.watch(audioPlayerProvider);
 
@@ -16,7 +16,7 @@ final activeTrackSourcesProvider = FutureProvider<
     return null;
   }
 
-  if (audioPlayerState.activeTrack is SpotubeLocalTrackObject) {
+  if (audioPlayerState.activeTrack is DeeMusiqLocalTrackObject) {
     return (
       source: null,
       notifier: null,
@@ -26,12 +26,12 @@ final activeTrackSourcesProvider = FutureProvider<
 
   final sourcedTrack = await ref.watch(
     sourcedTrackProvider(
-      audioPlayerState.activeTrack! as SpotubeFullTrackObject,
+      audioPlayerState.activeTrack! as DeeMusiqFullTrackObject,
     ).future,
   );
   final sourcedTrackNotifier = ref.watch(
     sourcedTrackProvider(
-      audioPlayerState.activeTrack! as SpotubeFullTrackObject,
+      audioPlayerState.activeTrack! as DeeMusiqFullTrackObject,
     ).notifier,
   );
 

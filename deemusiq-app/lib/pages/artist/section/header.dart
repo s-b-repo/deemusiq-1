@@ -3,18 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' hide Consumer;
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:spotube/collections/fake.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/components/image/universal_image.dart';
-import 'package:spotube/extensions/constrains.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/models/database/database.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/blacklist_provider.dart';
-import 'package:spotube/provider/metadata_plugin/artist/artist.dart';
-import 'package:spotube/provider/metadata_plugin/core/auth.dart';
-import 'package:spotube/provider/metadata_plugin/library/artists.dart';
-import 'package:spotube/utils/primitive_utils.dart';
+import 'package:deemusiq/collections/fake.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/components/image/universal_image.dart';
+import 'package:deemusiq/extensions/constrains.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/models/database/database.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/blacklist_provider.dart';
+import 'package:deemusiq/provider/metadata_plugin/artist/artist.dart';
+import 'package:deemusiq/provider/metadata_plugin/core/auth.dart';
+import 'package:deemusiq/provider/metadata_plugin/library/artists.dart';
+import 'package:deemusiq/utils/primitive_utils.dart';
 
 class ArtistPageHeader extends HookConsumerWidget {
   final String artistId;
@@ -86,7 +86,7 @@ class ArtistPageHeader extends HookConsumerWidget {
             ).call,
             child: IconButton(
               icon: Icon(
-                SpotubeIcons.userRemove,
+                DeeMusiqIcons.userRemove,
                 color: !isBlackListed ? Colors.red[400] : null,
               ),
               variance: isBlackListed
@@ -108,7 +108,7 @@ class ArtistPageHeader extends HookConsumerWidget {
             ),
           ),
           IconButton.ghost(
-            icon: const Icon(SpotubeIcons.share),
+            icon: const Icon(DeeMusiqIcons.share),
             onPressed: () async {
               await Clipboard.setData(
                 ClipboardData(

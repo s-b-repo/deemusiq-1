@@ -8,21 +8,21 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:spotube/collections/fake.dart';
+import 'package:deemusiq/collections/fake.dart';
 
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/components/fallbacks/anonymous_fallback.dart';
-import 'package:spotube/components/fallbacks/error_box.dart';
-import 'package:spotube/components/fallbacks/no_default_metadata_plugin.dart';
-import 'package:spotube/modules/artist/artist_card.dart';
-import 'package:spotube/components/inter_scrollbar/inter_scrollbar.dart';
-import 'package:spotube/components/waypoint.dart';
-import 'package:spotube/extensions/constrains.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/provider/metadata_plugin/core/auth.dart';
-import 'package:spotube/provider/metadata_plugin/library/artists.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/components/fallbacks/anonymous_fallback.dart';
+import 'package:deemusiq/components/fallbacks/error_box.dart';
+import 'package:deemusiq/components/fallbacks/no_default_metadata_plugin.dart';
+import 'package:deemusiq/modules/artist/artist_card.dart';
+import 'package:deemusiq/components/inter_scrollbar/inter_scrollbar.dart';
+import 'package:deemusiq/components/waypoint.dart';
+import 'package:deemusiq/extensions/constrains.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/provider/metadata_plugin/core/auth.dart';
+import 'package:deemusiq/provider/metadata_plugin/library/artists.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:spotube/services/metadata/errors/exceptions.dart';
+import 'package:deemusiq/services/metadata/errors/exceptions.dart';
 
 @RoutePage()
 class UserArtistsPage extends HookConsumerWidget {
@@ -102,7 +102,7 @@ class UserArtistsPage extends HookConsumerWidget {
                       child: TextField(
                         onChanged: (value) => searchText.value = value,
                         features: const [
-                          InputFeature.leading(Icon(SpotubeIcons.filter)),
+                          InputFeature.leading(Icon(DeeMusiqIcons.filter)),
                         ],
                         placeholder: Text(context.l10n.filter_artist),
                       ),

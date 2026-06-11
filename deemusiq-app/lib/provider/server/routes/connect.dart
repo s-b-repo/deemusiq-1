@@ -6,16 +6,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
-import 'package:spotube/collections/routes.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/models/connect/connect.dart';
-import 'package:spotube/models/metadata/metadata.dart';
+import 'package:deemusiq/collections/routes.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/models/connect/connect.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
 
-import 'package:spotube/provider/history/history.dart';
-import 'package:spotube/provider/audio_player/audio_player.dart';
-import 'package:spotube/provider/volume_provider.dart';
-import 'package:spotube/services/audio_player/audio_player.dart';
-import 'package:spotube/services/logger/logger.dart';
+import 'package:deemusiq/provider/history/history.dart';
+import 'package:deemusiq/provider/audio_player/audio_player.dart';
+import 'package:deemusiq/provider/volume_provider.dart';
+import 'package:deemusiq/services/audio_player/audio_player.dart';
+import 'package:deemusiq/services/logger/logger.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 extension _WebsocketSinkExts on WebSocketSink {
@@ -161,19 +161,19 @@ class ServerConnectRoutes {
 
                 event.onLoad((event) async {
                   await audioPlayerNotifier.load(
-                    event.data.tracks.cast<SpotubeFullTrackObject>().toList(),
+                    event.data.tracks.cast<DeeMusiqFullTrackObject>().toList(),
                     autoPlay: true,
                     initialIndex: event.data.initialIndex ?? 0,
                   );
 
                   if (event.data.collectionId == null) return;
                   audioPlayerNotifier.addCollection(event.data.collectionId!);
-                  if (event.data.collection is SpotubeSimpleAlbumObject) {
+                  if (event.data.collection is DeeMusiqSimpleAlbumObject) {
                     historyNotifier.addAlbums(
-                        [event.data.collection as SpotubeSimpleAlbumObject]);
+                        [event.data.collection as DeeMusiqSimpleAlbumObject]);
                   } else {
                     historyNotifier.addPlaylists(
-                        [event.data.collection as SpotubeSimplePlaylistObject]);
+                        [event.data.collection as DeeMusiqSimplePlaylistObject]);
                   }
                 });
 

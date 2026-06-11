@@ -4,23 +4,23 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:spotube/components/button/back_button.dart';
+import 'package:deemusiq/components/button/back_button.dart';
 
-import 'package:spotube/components/titlebar/titlebar.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/modules/artist/artist_album_list.dart';
+import 'package:deemusiq/components/titlebar/titlebar.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/modules/artist/artist_album_list.dart';
 
-import 'package:spotube/pages/artist/section/footer.dart';
-import 'package:spotube/pages/artist/section/header.dart';
-import 'package:spotube/pages/artist/section/related_artists.dart';
-import 'package:spotube/pages/artist/section/top_tracks.dart';
-import 'package:spotube/provider/metadata_plugin/artist/albums.dart';
-import 'package:spotube/provider/metadata_plugin/artist/artist.dart';
+import 'package:deemusiq/pages/artist/section/footer.dart';
+import 'package:deemusiq/pages/artist/section/header.dart';
+import 'package:deemusiq/pages/artist/section/related_artists.dart';
+import 'package:deemusiq/pages/artist/section/top_tracks.dart';
+import 'package:deemusiq/provider/metadata_plugin/artist/albums.dart';
+import 'package:deemusiq/provider/metadata_plugin/artist/artist.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:spotube/provider/metadata_plugin/artist/related.dart';
-import 'package:spotube/provider/metadata_plugin/artist/top_tracks.dart';
-import 'package:spotube/provider/metadata_plugin/artist/wikipedia.dart';
-import 'package:spotube/provider/metadata_plugin/library/artists.dart';
+import 'package:deemusiq/provider/metadata_plugin/artist/related.dart';
+import 'package:deemusiq/provider/metadata_plugin/artist/top_tracks.dart';
+import 'package:deemusiq/provider/metadata_plugin/artist/wikipedia.dart';
+import 'package:deemusiq/provider/metadata_plugin/library/artists.dart';
 
 @RoutePage()
 class ArtistPage extends HookConsumerWidget {

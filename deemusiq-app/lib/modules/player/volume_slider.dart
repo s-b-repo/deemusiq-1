@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
-import 'package:spotube/collections/spotube_icons.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
 
 class VolumeSlider extends HookConsumerWidget {
   final bool fullWidth;
@@ -51,12 +51,12 @@ class VolumeSlider extends HookConsumerWidget {
           variance: ButtonVariance.ghost,
           icon: Icon(
             value == 0
-                ? SpotubeIcons.volumeMute
+                ? DeeMusiqIcons.volumeMute
                 : value <= 0.2
-                    ? SpotubeIcons.volumeLow
+                    ? DeeMusiqIcons.volumeLow
                     : value <= 0.6
-                        ? SpotubeIcons.volumeMedium
-                        : SpotubeIcons.volumeHigh,
+                        ? DeeMusiqIcons.volumeMedium
+                        : DeeMusiqIcons.volumeHigh,
             size: 16,
           ),
           onPressed: () {

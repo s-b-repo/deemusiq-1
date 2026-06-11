@@ -78,5 +78,18 @@
 		<true/>
 		<key>UISupportsDocumentBrowser</key>
 		<true/>
-	</dict>
+		<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>za.co.deemusiq.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>deemusiq</string>
+			</array>
+		</dict>
+	</array>
+</dict>
 </plist>

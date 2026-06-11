@@ -3,14 +3,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-import 'package:spotube/collections/formatters.dart';
-import 'package:spotube/components/titlebar/titlebar.dart';
-import 'package:spotube/modules/stats/common/artist_item.dart';
-import 'package:spotube/extensions/context.dart';
+import 'package:deemusiq/collections/formatters.dart';
+import 'package:deemusiq/components/titlebar/titlebar.dart';
+import 'package:deemusiq/modules/stats/common/artist_item.dart';
+import 'package:deemusiq/extensions/context.dart';
 
-import 'package:spotube/provider/history/top.dart';
-import 'package:spotube/provider/history/top/tracks.dart';
-import 'package:spotube/provider/metadata_plugin/utils/common.dart';
+import 'package:deemusiq/provider/history/top.dart';
+import 'package:deemusiq/provider/history/top/tracks.dart';
+import 'package:deemusiq/provider/metadata_plugin/utils/common.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 import 'package:auto_route/auto_route.dart';
 

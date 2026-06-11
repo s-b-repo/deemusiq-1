@@ -1,17 +1,17 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/components/adaptive/adaptive_pop_sheet_list.dart';
-import 'package:spotube/components/dialogs/confirm_download_dialog.dart';
-import 'package:spotube/components/dialogs/playlist_add_track_dialog.dart';
-import 'package:spotube/components/track_presentation/presentation_props.dart';
-import 'package:spotube/components/track_presentation/presentation_state.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/download_manager_provider.dart';
-import 'package:spotube/provider/history/history.dart';
-import 'package:spotube/provider/audio_player/audio_player.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/components/adaptive/adaptive_pop_sheet_list.dart';
+import 'package:deemusiq/components/dialogs/confirm_download_dialog.dart';
+import 'package:deemusiq/components/dialogs/playlist_add_track_dialog.dart';
+import 'package:deemusiq/components/track_presentation/presentation_props.dart';
+import 'package:deemusiq/components/track_presentation/presentation_state.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/download_manager_provider.dart';
+import 'package:deemusiq/provider/history/history.dart';
+import 'package:deemusiq/provider/audio_player/audio_player.dart';
 
 ToastOverlay showToastForAction(
   BuildContext context,
@@ -19,20 +19,20 @@ ToastOverlay showToastForAction(
   int count,
 ) {
   final message = switch (action) {
-    "download" => (context.l10n.download_count(count), SpotubeIcons.download),
+    "download" => (context.l10n.download_count(count), DeeMusiqIcons.download),
     "add-to-playlist" => (
         context.l10n.add_count_to_playlist(count),
-        SpotubeIcons.playlistAdd
+        DeeMusiqIcons.playlistAdd
       ),
     "add-to-queue" => (
         context.l10n.add_count_to_queue(count),
-        SpotubeIcons.queueAdd
+        DeeMusiqIcons.queueAdd
       ),
     "play-next" => (
         context.l10n.play_count_next(count),
-        SpotubeIcons.lightning
+        DeeMusiqIcons.lightning
       ),
-    _ => ("", SpotubeIcons.error),
+    _ => ("", DeeMusiqIcons.error),
   };
 
   return showToast(
@@ -46,7 +46,7 @@ ToastOverlay showToastForAction(
           leadingAlignment: Alignment.center,
           trailing: IconButton.ghost(
             size: ButtonSize.small,
-            icon: const Icon(SpotubeIcons.close),
+            icon: const Icon(DeeMusiqIcons.close),
             onPressed: () {
               overlay.close();
             },
@@ -76,11 +76,11 @@ class TrackPresentationActionsSection extends HookConsumerWidget {
 
     Future<void> actionDownloadTracks({
       required BuildContext context,
-      required List<SpotubeTrackObject> tracks,
+      required List<DeeMusiqTrackObject> tracks,
       required String action,
     }) async {
       final fullTrackObjects =
-          tracks.whereType<SpotubeFullTrackObject>().toList();
+          tracks.whereType<DeeMusiqFullTrackObject>().toList();
       final confirmed = await showDialog<bool>(
             context: context,
             builder: (context) {
@@ -144,12 +144,12 @@ class TrackPresentationActionsSection extends HookConsumerWidget {
             {
               playlistNotifier.addTracksAtFirst(tracks);
               playlistNotifier.addCollection(options.collectionId);
-              if (options.collection is SpotubeSimpleAlbumObject) {
+              if (options.collection is DeeMusiqSimpleAlbumObject) {
                 historyNotifier.addAlbums(
-                    [options.collection as SpotubeSimpleAlbumObject]);
+                    [options.collection as DeeMusiqSimpleAlbumObject]);
               } else {
                 historyNotifier.addPlaylists(
-                    [options.collection as SpotubeSimplePlaylistObject]);
+                    [options.collection as DeeMusiqSimplePlaylistObject]);
               }
               notifier.deselectAllTracks();
               if (!context.mounted) return;
@@ -160,12 +160,12 @@ class TrackPresentationActionsSection extends HookConsumerWidget {
             {
               playlistNotifier.addTracks(tracks);
               playlistNotifier.addCollection(options.collectionId);
-              if (options.collection is SpotubeSimpleAlbumObject) {
+              if (options.collection is DeeMusiqSimpleAlbumObject) {
                 historyNotifier.addAlbums(
-                    [options.collection as SpotubeSimpleAlbumObject]);
+                    [options.collection as DeeMusiqSimpleAlbumObject]);
               } else {
                 historyNotifier.addPlaylists(
-                    [options.collection as SpotubeSimplePlaylistObject]);
+                    [options.collection as DeeMusiqSimplePlaylistObject]);
               }
               notifier.deselectAllTracks();
               if (!context.mounted) return;
@@ -177,12 +177,12 @@ class TrackPresentationActionsSection extends HookConsumerWidget {
 
         if (!context.mounted) return;
       },
-      icon: const Icon(SpotubeIcons.moreVertical),
+      icon: const Icon(DeeMusiqIcons.moreVertical),
       variance: ButtonVariance.outline,
       items: (context) => [
         AdaptiveMenuButton(
           value: "download",
-          leading: const Icon(SpotubeIcons.download),
+          leading: const Icon(DeeMusiqIcons.download),
           child: selectedTracks.isEmpty ||
                   selectedTracks.length == options.tracks.length
               ? Text(
@@ -194,7 +194,7 @@ class TrackPresentationActionsSection extends HookConsumerWidget {
         ),
         AdaptiveMenuButton(
           value: "add-to-playlist",
-          leading: const Icon(SpotubeIcons.playlistAdd),
+          leading: const Icon(DeeMusiqIcons.playlistAdd),
           child: selectedTracks.isEmpty ||
                   selectedTracks.length == options.tracks.length
               ? Text(
@@ -206,7 +206,7 @@ class TrackPresentationActionsSection extends HookConsumerWidget {
         ),
         AdaptiveMenuButton(
           value: "add-to-queue",
-          leading: const Icon(SpotubeIcons.queueAdd),
+          leading: const Icon(DeeMusiqIcons.queueAdd),
           child: selectedTracks.isEmpty ||
                   selectedTracks.length == options.tracks.length
               ? Text(
@@ -218,7 +218,7 @@ class TrackPresentationActionsSection extends HookConsumerWidget {
         ),
         AdaptiveMenuButton(
           value: "play-next",
-          leading: const Icon(SpotubeIcons.lightning),
+          leading: const Icon(DeeMusiqIcons.lightning),
           child: selectedTracks.isEmpty ||
                   selectedTracks.length == options.tracks.length
               ? Text(

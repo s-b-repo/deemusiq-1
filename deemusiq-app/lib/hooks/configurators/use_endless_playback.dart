@@ -1,10 +1,10 @@
-import 'package:spotube/provider/metadata_plugin/metadata_plugin_provider.dart';
-import 'package:spotube/services/logger/logger.dart';
+import 'package:deemusiq/provider/metadata_plugin/metadata_plugin_provider.dart';
+import 'package:deemusiq/services/logger/logger.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotube/provider/audio_player/audio_player.dart';
-import 'package:spotube/provider/user_preferences/user_preferences_provider.dart';
-import 'package:spotube/services/audio_player/audio_player.dart';
+import 'package:deemusiq/provider/audio_player/audio_player.dart';
+import 'package:deemusiq/provider/user_preferences/user_preferences_provider.dart';
+import 'package:deemusiq/services/audio_player/audio_player.dart';
 
 void useEndlessPlayback(WidgetRef ref) {
   final playback = ref.watch(audioPlayerProvider.notifier);

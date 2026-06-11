@@ -3,15 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/components/heart_button/heart_button.dart';
-import 'package:spotube/components/image/universal_image.dart';
-import 'package:spotube/components/track_presentation/presentation_props.dart';
-import 'package:spotube/components/track_presentation/use_action_callbacks.dart';
-import 'package:spotube/components/track_presentation/use_is_user_playlist.dart';
-import 'package:spotube/extensions/constrains.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/modules/playlist/playlist_create_dialog.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/components/heart_button/heart_button.dart';
+import 'package:deemusiq/components/image/universal_image.dart';
+import 'package:deemusiq/components/track_presentation/presentation_props.dart';
+import 'package:deemusiq/components/track_presentation/use_action_callbacks.dart';
+import 'package:deemusiq/components/track_presentation/use_is_user_playlist.dart';
+import 'package:deemusiq/extensions/constrains.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/modules/playlist/playlist_create_dialog.dart';
 
 class TrackPresentationTopSection extends HookConsumerWidget {
   const TrackPresentationTopSection({super.key});
@@ -46,7 +46,7 @@ class TrackPresentationTopSection extends HookConsumerWidget {
                     child:
                         CircularProgressIndicator(onSurface: false, size: 20),
                   )
-                : const Icon(SpotubeIcons.shuffle),
+                : const Icon(DeeMusiqIcons.shuffle),
             enabled: !isLoading && !isActive,
             onPressed: onShuffle,
           ),
@@ -57,14 +57,14 @@ class TrackPresentationTopSection extends HookConsumerWidget {
               child: Text(context.l10n.add_to_queue),
             ).call,
             child: IconButton.secondary(
-              icon: const Icon(SpotubeIcons.queueAdd),
+              icon: const Icon(DeeMusiqIcons.queueAdd),
               enabled: !isLoading && !isActive,
               onPressed: onAddToQueue,
             ),
           )
         else
           Button.secondary(
-            leading: const Icon(SpotubeIcons.add),
+            leading: const Icon(DeeMusiqIcons.add),
             enabled: !isLoading && !isActive,
             onPressed: onAddToQueue,
             child: Text(context.l10n.queue),
@@ -72,11 +72,11 @@ class TrackPresentationTopSection extends HookConsumerWidget {
         Button.primary(
           alignment: Alignment.center,
           leading: switch ((isActive, isLoading)) {
-            (true, false) => const Icon(SpotubeIcons.pause),
+            (true, false) => const Icon(DeeMusiqIcons.pause),
             (false, true) => const Center(
                 child: CircularProgressIndicator(onSurface: true, size: 18),
               ),
-            _ => const Icon(SpotubeIcons.play),
+            _ => const Icon(DeeMusiqIcons.play),
           },
           onPressed: onPlay,
           enabled: !isLoading && !isActive,
@@ -91,7 +91,7 @@ class TrackPresentationTopSection extends HookConsumerWidget {
         if (isUserPlaylist)
           IconButton.outline(
             size: ButtonSize.small,
-            icon: const Icon(SpotubeIcons.edit),
+            icon: const Icon(DeeMusiqIcons.edit),
             onPressed: () {
               showDialog(
                 context: context,
@@ -110,7 +110,7 @@ class TrackPresentationTopSection extends HookConsumerWidget {
               child: Text(context.l10n.share),
             ).call,
             child: IconButton.outline(
-              icon: const Icon(SpotubeIcons.share),
+              icon: const Icon(DeeMusiqIcons.share),
               size: ButtonSize.small,
               onPressed: () async {
                 await Clipboard.setData(

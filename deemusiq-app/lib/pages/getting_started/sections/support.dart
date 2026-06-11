@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
-import 'package:spotube/collections/env.dart';
-import 'package:spotube/collections/routes.gr.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/modules/getting_started/blur_card.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/services/kv_store/kv_store.dart';
+import 'package:deemusiq/collections/env.dart';
+import 'package:deemusiq/collections/routes.gr.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/modules/getting_started/blur_card.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/services/kv_store/kv_store.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class GettingStartedScreenSupportSection extends HookConsumerWidget {
@@ -25,7 +25,7 @@ class GettingStartedScreenSupportSection extends HookConsumerWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(SpotubeIcons.heartFilled, color: Colors.pink),
+                    const Icon(DeeMusiqIcons.heartFilled, color: Colors.pink),
                     const SizedBox(width: 8),
                     Text(
                       context.l10n.help_project_grow,
@@ -41,7 +41,7 @@ class GettingStartedScreenSupportSection extends HookConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Button(
-                      leading: const Icon(SpotubeIcons.github),
+                      leading: const Icon(DeeMusiqIcons.github),
                       style: ButtonVariance.primary.copyWith(
                           decoration: (context, states, value) {
                         if (states.isNotEmpty) {
@@ -68,7 +68,7 @@ class GettingStartedScreenSupportSection extends HookConsumerWidget {
                     if (!Env.hideDonations) ...[
                       const Gap(16),
                       Button(
-                        leading: const Icon(SpotubeIcons.openCollective),
+                        leading: const Icon(DeeMusiqIcons.openCollective),
                         style: ButtonVariance.primary.copyWith(
                             decoration: (context, states, value) {
                           if (states.isNotEmpty) {
@@ -105,7 +105,7 @@ class GettingStartedScreenSupportSection extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Button.primary(
-                  leading: const Icon(SpotubeIcons.extensions),
+                  leading: const Icon(DeeMusiqIcons.extensions),
                   onPressed: () async {
                     await KVStoreService.setDoneGettingStarted(true);
                     if (context.mounted) {

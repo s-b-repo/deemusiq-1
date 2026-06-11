@@ -7,17 +7,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
 
-import 'package:spotube/collections/side_bar_tiles.dart';
-import 'package:spotube/extensions/constrains.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/models/database/database.dart';
-import 'package:spotube/provider/download_manager_provider.dart';
-import 'package:spotube/provider/user_preferences/user_preferences_provider.dart';
+import 'package:deemusiq/collections/side_bar_tiles.dart';
+import 'package:deemusiq/extensions/constrains.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/models/database/database.dart';
+import 'package:deemusiq/provider/download_manager_provider.dart';
+import 'package:deemusiq/provider/user_preferences/user_preferences_provider.dart';
 
 final navigationPanelHeight = StateProvider<double>((ref) => 50);
 
-class SpotubeNavigationBar extends HookConsumerWidget {
-  const SpotubeNavigationBar({
+class DeeMusiqNavigationBar extends HookConsumerWidget {
+  const DeeMusiqNavigationBar({
     super.key,
   });
 

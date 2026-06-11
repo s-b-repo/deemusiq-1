@@ -1,6 +1,6 @@
 import 'package:hetu_script/hetu_script.dart';
 import 'package:hetu_script/values.dart';
-import 'package:spotube/models/metadata/metadata.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
 
 class MetadataPluginPlaylistEndpoint {
   final Hetu hetu;
@@ -10,16 +10,16 @@ class MetadataPluginPlaylistEndpoint {
       (hetu.fetch("metadataPlugin") as HTInstance).memberGet("playlist")
           as HTInstance;
 
-  Future<SpotubeFullPlaylistObject> getPlaylist(String id) async {
+  Future<DeeMusiqFullPlaylistObject> getPlaylist(String id) async {
     final raw = await hetuMetadataPlaylist
         .invoke("getPlaylist", positionalArgs: [id]) as Map;
 
-    return SpotubeFullPlaylistObject.fromJson(
+    return DeeMusiqFullPlaylistObject.fromJson(
       raw.cast<String, dynamic>(),
     );
   }
 
-  Future<SpotubePaginationResponseObject<SpotubeFullTrackObject>> tracks(
+  Future<DeeMusiqPaginationResponseObject<DeeMusiqFullTrackObject>> tracks(
     String id, {
     int? offset,
     int? limit,
@@ -33,14 +33,14 @@ class MetadataPluginPlaylistEndpoint {
       }..removeWhere((key, value) => value == null),
     ) as Map;
 
-    return SpotubePaginationResponseObject<SpotubeFullTrackObject>.fromJson(
+    return DeeMusiqPaginationResponseObject<DeeMusiqFullTrackObject>.fromJson(
       raw.cast<String, dynamic>(),
       (Map json) =>
-          SpotubeFullTrackObject.fromJson(json.cast<String, dynamic>()),
+          DeeMusiqFullTrackObject.fromJson(json.cast<String, dynamic>()),
     );
   }
 
-  Future<SpotubeFullPlaylistObject?> create(
+  Future<DeeMusiqFullPlaylistObject?> create(
     String userId, {
     required String name,
     String? description,
@@ -60,7 +60,7 @@ class MetadataPluginPlaylistEndpoint {
 
     if (raw == null) return null;
 
-    return SpotubeFullPlaylistObject.fromJson(
+    return DeeMusiqFullPlaylistObject.fromJson(
       raw.cast<String, dynamic>(),
     );
   }

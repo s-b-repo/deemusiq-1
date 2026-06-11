@@ -2,17 +2,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
-import 'package:spotube/collections/routes.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/components/ui/button_tile.dart';
-import 'package:spotube/extensions/constrains.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/track_options/track_options_provider.dart';
+import 'package:deemusiq/collections/routes.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/components/ui/button_tile.dart';
+import 'package:deemusiq/components/wallet/push_song_dialog.dart';
+import 'package:deemusiq/extensions/constrains.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/track_options/track_options_provider.dart';
 
-/// [track] must be a [SpotubeFullTrackObject] or [SpotubeLocalTrackObject]
+/// [track] must be a [DeeMusiqFullTrackObject] or [DeeMusiqLocalTrackObject]
 class TrackOptions extends HookConsumerWidget {
-  final SpotubeTrackObject track;
+  final DeeMusiqTrackObject track;
   final bool userPlaylist;
   final String? playlistId;
   final Widget? icon;
@@ -26,8 +27,8 @@ class TrackOptions extends HookConsumerWidget {
     this.icon,
     this.onTapItem,
   }) : assert(
-          track is SpotubeFullTrackObject || track is SpotubeLocalTrackObject,
-          "Track must be a SpotubeFullTrackObject, SpotubeLocalTrackObject",
+          track is DeeMusiqFullTrackObject || track is DeeMusiqLocalTrackObject,
+          "Track must be a DeeMusiqFullTrackObject, DeeMusiqLocalTrackObject",
         );
 
   @override
@@ -44,7 +45,7 @@ class TrackOptions extends HookConsumerWidget {
       :isLiked,
       :downloadTask
     ) = ref.watch(trackOptionsStateProvider(track));
-    final isLocalTrack = track is SpotubeLocalTrackObject;
+    final isLocalTrack = track is DeeMusiqLocalTrackObject;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -62,7 +63,7 @@ class TrackOptions extends HookConsumerWidget {
               );
               onTapItem?.call();
             },
-            leading: const Icon(SpotubeIcons.trash),
+            leading: const Icon(DeeMusiqIcons.trash),
             title: Text(context.l10n.delete),
           ),
         if (mediaQuery.smAndDown && !isLocalTrack)
@@ -76,7 +77,7 @@ class TrackOptions extends HookConsumerWidget {
               );
               onTapItem?.call();
             },
-            leading: const Icon(SpotubeIcons.album),
+            leading: const Icon(DeeMusiqIcons.album),
             title: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +101,7 @@ class TrackOptions extends HookConsumerWidget {
               );
               onTapItem?.call();
             },
-            leading: const Icon(SpotubeIcons.queueAdd),
+            leading: const Icon(DeeMusiqIcons.queueAdd),
             title: Text(context.l10n.add_to_queue),
           ),
           ButtonTile(
@@ -113,7 +114,7 @@ class TrackOptions extends HookConsumerWidget {
               );
               onTapItem?.call();
             },
-            leading: const Icon(SpotubeIcons.lightning),
+            leading: const Icon(DeeMusiqIcons.lightning),
             title: Text(context.l10n.play_next),
           ),
         ] else
@@ -128,7 +129,7 @@ class TrackOptions extends HookConsumerWidget {
               onTapItem?.call();
             },
             enabled: !isActiveTrack,
-            leading: const Icon(SpotubeIcons.queueRemove),
+            leading: const Icon(DeeMusiqIcons.queueRemove),
             title: Text(context.l10n.remove_from_queue),
           ),
         if (isAuthenticated && !isLocalTrack)
@@ -144,15 +145,37 @@ class TrackOptions extends HookConsumerWidget {
             },
             leading: isLiked
                 ? const Icon(
-                    SpotubeIcons.heartFilled,
+                    DeeMusiqIcons.heartFilled,
                     color: Colors.pink,
                   )
-                : const Icon(SpotubeIcons.heart),
+                : const Icon(DeeMusiqIcons.heart),
             title: Text(
               isLiked
                   ? context.l10n.remove_from_favorites
                   : context.l10n.save_as_favorite,
             ),
+          ),
+        if (!isLocalTrack)
+          ButtonTile(
+            style: ButtonVariance.menu,
+            onPressed: () {
+              onTapItem?.call();
+              showPushSongDialog(
+                rootNavigatorKey.currentContext!,
+                songId: track.id,
+                title: track.name,
+                artist:
+                    track.artists.isNotEmpty ? track.artists.first.name : "",
+                artistId:
+                    track.artists.isNotEmpty ? track.artists.first.id : null,
+                imageUrl: track.album.images.smallest(ImagePlaceholder.albumArt),
+              );
+            },
+            leading: const Icon(
+              DeeMusiqIcons.boost,
+              color: Color(0xFFFF5722),
+            ),
+            title: const Text("Push this song"),
           ),
         if (isAuthenticated && !isLocalTrack) ...[
           ButtonTile(
@@ -165,7 +188,7 @@ class TrackOptions extends HookConsumerWidget {
               );
               onTapItem?.call();
             },
-            leading: const Icon(SpotubeIcons.radio),
+            leading: const Icon(DeeMusiqIcons.radio),
             title: Text(context.l10n.start_a_radio),
           ),
           ButtonTile(
@@ -178,7 +201,7 @@ class TrackOptions extends HookConsumerWidget {
               );
               onTapItem?.call();
             },
-            leading: const Icon(SpotubeIcons.playlistAdd),
+            leading: const Icon(DeeMusiqIcons.playlistAdd),
             title: Text(context.l10n.add_to_playlist),
           ),
         ],
@@ -193,7 +216,7 @@ class TrackOptions extends HookConsumerWidget {
               );
               onTapItem?.call();
             },
-            leading: const Icon(SpotubeIcons.removeFilled),
+            leading: const Icon(DeeMusiqIcons.removeFilled),
             title: Text(context.l10n.remove_from_playlist),
           ),
         if (!isLocalTrack)
@@ -222,7 +245,7 @@ class TrackOptions extends HookConsumerWidget {
                       );
                     },
                   )
-                : const Icon(SpotubeIcons.download),
+                : const Icon(DeeMusiqIcons.download),
             title: Text(context.l10n.download_track),
           ),
         if (!isLocalTrack)
@@ -237,7 +260,7 @@ class TrackOptions extends HookConsumerWidget {
               onTapItem?.call();
             },
             leading: Icon(
-              SpotubeIcons.playlistRemove,
+              DeeMusiqIcons.playlistRemove,
               color: isBlacklisted != true ? Colors.red[400] : null,
             ),
             title: Text(
@@ -260,7 +283,7 @@ class TrackOptions extends HookConsumerWidget {
               );
               onTapItem?.call();
             },
-            leading: const Icon(SpotubeIcons.share),
+            leading: const Icon(DeeMusiqIcons.share),
             title: Text(context.l10n.share),
           ),
         if (!isLocalTrack)
@@ -274,7 +297,7 @@ class TrackOptions extends HookConsumerWidget {
               );
               onTapItem?.call();
             },
-            leading: const Icon(SpotubeIcons.info),
+            leading: const Icon(DeeMusiqIcons.info),
             title: Text(context.l10n.details),
           ),
       ],

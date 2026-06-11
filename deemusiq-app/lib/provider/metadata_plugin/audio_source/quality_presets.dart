@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/metadata_plugin/metadata_plugin_provider.dart';
-import 'package:spotube/services/audio_player/audio_player.dart';
-import 'package:spotube/services/metadata/errors/exceptions.dart';
-import 'package:spotube/services/metadata/metadata.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/metadata_plugin/metadata_plugin_provider.dart';
+import 'package:deemusiq/services/audio_player/audio_player.dart';
+import 'package:deemusiq/services/metadata/errors/exceptions.dart';
+import 'package:deemusiq/services/metadata/metadata.dart';
 
 part 'quality_presets.g.dart';
 part 'quality_presets.freezed.dart';
@@ -15,7 +15,7 @@ part 'quality_presets.freezed.dart';
 @freezed
 class AudioSourcePresetsState with _$AudioSourcePresetsState {
   factory AudioSourcePresetsState({
-    @Default([]) final List<SpotubeAudioSourceContainerPreset> presets,
+    @Default([]) final List<DeeMusiqAudioSourceContainerPreset> presets,
     @Default(0) final int selectedStreamingQualityIndex,
     @Default(0) final int selectedStreamingContainerIndex,
     @Default(0) final int selectedDownloadingQualityIndex,
@@ -41,10 +41,10 @@ class AudioSourceAvailableQualityPresetsNotifier
     listenSelf((previous, next) {
       final isNewLossless =
           next.presets.elementAtOrNull(next.selectedStreamingContainerIndex)
-              is SpotubeAudioSourceContainerPresetLossless;
+              is DeeMusiqAudioSourceContainerPresetLossless;
       final isOldLossless = previous?.presets
               .elementAtOrNull(previous.selectedStreamingContainerIndex)
-          is SpotubeAudioSourceContainerPresetLossless;
+          is DeeMusiqAudioSourceContainerPresetLossless;
       if (!isOldLossless && isNewLossless) {
         audioPlayer.setDemuxerBufferSize(6 * 1024 * 1024); // 6MB
       } else if (isOldLossless && !isNewLossless) {

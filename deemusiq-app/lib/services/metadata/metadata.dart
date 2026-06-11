@@ -10,22 +10,22 @@ import 'package:hetu_std/hetu_std.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spotube/collections/routes.dart';
-import 'package:spotube/collections/routes.gr.dart';
-import 'package:spotube/components/titlebar/titlebar.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/services/metadata/apis/localstorage.dart';
-import 'package:spotube/services/metadata/endpoints/album.dart';
-import 'package:spotube/services/metadata/endpoints/artist.dart';
-import 'package:spotube/services/metadata/endpoints/audio_source.dart';
-import 'package:spotube/services/metadata/endpoints/auth.dart';
-import 'package:spotube/services/metadata/endpoints/browse.dart';
-import 'package:spotube/services/metadata/endpoints/playlist.dart';
-import 'package:spotube/services/metadata/endpoints/search.dart';
-import 'package:spotube/services/metadata/endpoints/track.dart';
-import 'package:spotube/services/metadata/endpoints/core.dart';
-import 'package:spotube/services/metadata/endpoints/user.dart';
-import 'package:spotube/services/youtube_engine/youtube_engine.dart';
+import 'package:deemusiq/collections/routes.dart';
+import 'package:deemusiq/collections/routes.gr.dart';
+import 'package:deemusiq/components/titlebar/titlebar.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/services/metadata/apis/localstorage.dart';
+import 'package:deemusiq/services/metadata/endpoints/album.dart';
+import 'package:deemusiq/services/metadata/endpoints/artist.dart';
+import 'package:deemusiq/services/metadata/endpoints/audio_source.dart';
+import 'package:deemusiq/services/metadata/endpoints/auth.dart';
+import 'package:deemusiq/services/metadata/endpoints/browse.dart';
+import 'package:deemusiq/services/metadata/endpoints/playlist.dart';
+import 'package:deemusiq/services/metadata/endpoints/search.dart';
+import 'package:deemusiq/services/metadata/endpoints/track.dart';
+import 'package:deemusiq/services/metadata/endpoints/core.dart';
+import 'package:deemusiq/services/metadata/endpoints/user.dart';
+import 'package:deemusiq/services/youtube_engine/youtube_engine.dart';
 
 const defaultMetadataLimit = "20";
 
@@ -44,7 +44,7 @@ class MetadataPlugin {
     hetu.init();
 
     HetuStdLoader.loadBindings(hetu);
-    HetuSpotubePluginLoader.loadBindings(
+    HetuDeeMusiqPluginLoader.loadBindings(
       hetu,
       localStorageImpl: SharedPreferencesLocalStorage(
         sharedPreferences,
@@ -137,7 +137,7 @@ class MetadataPlugin {
 
     await HetuStdLoader.loadBytecodeFlutter(hetu);
     await HetuOtpUtilLoader.loadBytecodeFlutter(hetu);
-    await HetuSpotubePluginLoader.loadBytecodeFlutter(hetu);
+    await HetuDeeMusiqPluginLoader.loadBytecodeFlutter(hetu);
 
     hetu.loadBytecode(bytes: byteCode, moduleName: "plugin");
     hetu.eval("""

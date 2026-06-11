@@ -16,7 +16,7 @@
     linux:   "", // e.g. ".../DeeMusiq.AppImage"
     macos:   ""  // e.g. ".../DeeMusiq.dmg"
   };
-  var CONTACT_EMAIL = "getdeemusiq@gmail.com";
+  var CONTACT_EMAIL = "deemusiq@protonmail.com";
 
   /* ---------- current year ---------- */
   var yr = document.getElementById("yr");
@@ -97,6 +97,7 @@
         if (note) {
           note.style.color = "var(--orange-2)";
           note.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(function () { note.style.color = ""; }, 4000);
         }
         var topic = document.getElementById("cf-topic");
         var msg = document.getElementById("cf-msg");
@@ -106,6 +107,18 @@
       });
     }
   });
+
+  /* ---------- OS hint: highlight the matching download button ---------- */
+  var ua = navigator.userAgent;
+  var osHint = /android/i.test(ua)            ? "android"
+             : /windows/i.test(ua)            ? "windows"
+             : /macintosh|mac os x/i.test(ua) ? "macos"
+             : /linux/i.test(ua)              ? "linux"
+             : null;
+  if (osHint) {
+    var dlBtn = document.querySelector('.dl[data-platform="' + osHint + '"]');
+    if (dlBtn) dlBtn.classList.add("dl--active");
+  }
 
   /* ---------- contact form → mailto ---------- */
   var form = document.getElementById("contactForm");

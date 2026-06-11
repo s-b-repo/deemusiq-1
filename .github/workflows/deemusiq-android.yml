@@ -4,6 +4,14 @@ name: Build DeeMusiq (Android APK)
 #  • Manual:  Actions tab → this workflow → Run workflow
 #  • Release: push a tag like v1.0.0  →  APK is attached to a GitHub Release
 #
+# NOTE — there are intentionally TWO copies of this workflow:
+#  • THIS one (repo root .github/) builds from the monorepo, with
+#    working-directory: deemusiq-app. GitHub only auto-discovers workflows under the
+#    repo-root .github/, so ONLY this one runs in the monorepo (no double-build).
+#  • deemusiq-app/.github/ holds a near-identical copy WITHOUT a working-directory,
+#    for the documented "upload only the deemusiq-app/ folder to its own repo" path
+#    (see deemusiq-app/README.DEEMUSIQ.md). They are NOT a conflict — keep both.
+#
 # Signing: a TEMPORARY keystore is auto-generated so the APK installs for testing.
 # For public releases with working updates, add repo secrets KEYSTORE_BASE64,
 # KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD (see deemusiq-app/README.DEEMUSIQ.md).
@@ -15,6 +23,10 @@ on:
 
 permissions:
   contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   FLUTTER_VERSION: "3.35.2"
@@ -48,12 +60,31 @@ jobs:
       - name: Install dependencies
         run: |
           flutter pub get
+          # Spotube's helper sets up any native platform deps; non-fatal if it no-ops.
           dart cli/cli.dart install-dependencies --platform=android --arch=all || true
 
       - name: Generate DeeMusiq icons & splash
         run: |
           dart run flutter_launcher_icons -f flutter_launcher_icons.yaml || dart run flutter_launcher_icons
           dart run flutter_native_splash:create
+
+      - name: Create .env (required by envied code generation)
+        # env.dart is annotated @Envied(requireEnvFile: true, path: ".env"), so
+        # build_runner aborts if .env is missing. The LastFM keys may be empty
+        # (scrobbling just stays off); the build still succeeds. Set repo secrets
+        # LASTFM_API_KEY / LASTFM_API_SECRET to enable Last.fm scrobbling.
+        # Secrets are passed via env: (not interpolated into the script body).
+        env:
+          LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
+          LASTFM_API_SECRET: ${{ secrets.LASTFM_API_SECRET }}
+        run: |
+          cat > .env <<EOF
+          LASTFM_API_KEY=${LASTFM_API_KEY}
+          LASTFM_API_SECRET=${LASTFM_API_SECRET}
+          ENABLE_UPDATE_CHECK=1
+          RELEASE_CHANNEL=stable
+          HIDE_DONATIONS=0
+          EOF
 
       - name: Generate code (build_runner)
         run: dart run build_runner build --delete-conflicting-outputs

@@ -2,14 +2,14 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/metadata_plugin/utils/common.dart';
-import 'package:spotube/services/logger/logger.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/metadata_plugin/utils/common.dart';
+import 'package:deemusiq/services/logger/logger.dart';
 
 abstract class FamilyPaginatedAsyncNotifier<K, A>
-    extends FamilyAsyncNotifier<SpotubePaginationResponseObject<K>, A>
+    extends FamilyAsyncNotifier<DeeMusiqPaginationResponseObject<K>, A>
     with MetadataPluginMixin<K> {
-  Future<SpotubePaginationResponseObject<K>> fetch(int offset, int limit);
+  Future<DeeMusiqPaginationResponseObject<K>> fetch(int offset, int limit);
 
   Future<void> fetchMore() async {
     if (state.value == null || !state.value!.hasMore) return;
@@ -74,9 +74,9 @@ abstract class FamilyPaginatedAsyncNotifier<K, A>
 }
 
 abstract class AutoDisposeFamilyPaginatedAsyncNotifier<K, A>
-    extends AutoDisposeFamilyAsyncNotifier<SpotubePaginationResponseObject<K>,
+    extends AutoDisposeFamilyAsyncNotifier<DeeMusiqPaginationResponseObject<K>,
         A> with MetadataPluginMixin<K> {
-  Future<SpotubePaginationResponseObject<K>> fetch(int offset, int limit);
+  Future<DeeMusiqPaginationResponseObject<K>> fetch(int offset, int limit);
 
   Future<void> fetchMore() async {
     if (state.value == null || !state.value!.hasMore) return;

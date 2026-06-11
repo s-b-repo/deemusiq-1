@@ -1,13 +1,13 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
-import 'package:spotube/collections/assets.gen.dart';
-import 'package:spotube/components/titlebar/titlebar.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/pages/getting_started/sections/greeting.dart';
-import 'package:spotube/pages/getting_started/sections/playback.dart';
-import 'package:spotube/pages/getting_started/sections/region.dart';
-import 'package:spotube/pages/getting_started/sections/support.dart';
+import 'package:deemusiq/collections/assets.gen.dart';
+import 'package:deemusiq/components/titlebar/titlebar.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/pages/getting_started/sections/greeting.dart';
+import 'package:deemusiq/pages/getting_started/sections/playback.dart';
+import 'package:deemusiq/pages/getting_started/sections/region.dart';
+import 'package:deemusiq/pages/getting_started/sections/support.dart';
 import 'package:auto_route/auto_route.dart';
 
 @RoutePage()

@@ -1,21 +1,21 @@
 part of 'metadata.dart';
 
 @Freezed(genericArgumentFactories: true)
-class SpotubePaginationResponseObject<T>
-    with _$SpotubePaginationResponseObject<T> {
-  factory SpotubePaginationResponseObject({
+class DeeMusiqPaginationResponseObject<T>
+    with _$DeeMusiqPaginationResponseObject<T> {
+  factory DeeMusiqPaginationResponseObject({
     required int limit,
     required int? nextOffset,
     required int total,
     required bool hasMore,
     required List<T> items,
-  }) = _SpotubePaginationResponseObject<T>;
+  }) = _DeeMusiqPaginationResponseObject<T>;
 
-  factory SpotubePaginationResponseObject.fromJson(
+  factory DeeMusiqPaginationResponseObject.fromJson(
     Map<String, Object?> json,
     T Function(Map<String, dynamic> json) fromJsonT,
   ) =>
-      _$SpotubePaginationResponseObjectFromJson<T>(
+      _$DeeMusiqPaginationResponseObjectFromJson<T>(
         json,
         (json) => fromJsonT(json as Map<String, dynamic>),
       );

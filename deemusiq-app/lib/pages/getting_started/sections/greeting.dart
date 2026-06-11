@@ -1,10 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
-import 'package:spotube/collections/assets.gen.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/modules/getting_started/blur_card.dart';
-import 'package:spotube/utils/platform.dart';
+import 'package:deemusiq/collections/assets.gen.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/modules/getting_started/blur_card.dart';
+import 'package:deemusiq/utils/platform.dart';
 
 class GettingStartedPageGreetingSection extends HookConsumerWidget {
   final VoidCallback onNext;
@@ -30,7 +30,7 @@ class GettingStartedPageGreetingSection extends HookConsumerWidget {
             const Gap(84),
             Button.primary(
               onPressed: onNext,
-              trailing: const Icon(SpotubeIcons.angleRight),
+              trailing: const Icon(DeeMusiqIcons.angleRight),
               child: Text(context.l10n.get_started),
             ),
           ],

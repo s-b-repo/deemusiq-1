@@ -1,13 +1,13 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
-import 'package:spotube/components/fallbacks/error_box.dart';
-import 'package:spotube/components/horizontal_playbutton_card_view/horizontal_playbutton_card_view.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/metadata_plugin/album/releases.dart';
-import 'package:spotube/provider/metadata_plugin/core/auth.dart';
-import 'package:spotube/provider/metadata_plugin/utils/common.dart';
-import 'package:spotube/services/metadata/errors/exceptions.dart';
+import 'package:deemusiq/components/fallbacks/error_box.dart';
+import 'package:deemusiq/components/horizontal_playbutton_card_view/horizontal_playbutton_card_view.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/metadata_plugin/album/releases.dart';
+import 'package:deemusiq/provider/metadata_plugin/core/auth.dart';
+import 'package:deemusiq/provider/metadata_plugin/utils/common.dart';
+import 'package:deemusiq/services/metadata/errors/exceptions.dart';
 
 class HomeNewReleasesSection extends HookConsumerWidget {
   const HomeNewReleasesSection({super.key});
@@ -34,7 +34,7 @@ class HomeNewReleasesSection extends HookConsumerWidget {
       return const SizedBox.shrink();
     }
 
-    return HorizontalPlaybuttonCardView<SpotubeSimpleAlbumObject>(
+    return HorizontalPlaybuttonCardView<DeeMusiqSimpleAlbumObject>(
       items: newReleases.asData?.value.items ?? [],
       title: Text(context.l10n.new_releases),
       isLoadingNextPage: newReleases.isLoadingNextPage,

@@ -1,13 +1,13 @@
 import 'package:flutter/services.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
-import 'package:spotube/collections/assets.gen.dart';
-import 'package:spotube/collections/env.dart';
-import 'package:spotube/components/button/back_button.dart';
-import 'package:spotube/components/image/universal_image.dart';
-import 'package:spotube/components/links/hyper_link.dart';
-import 'package:spotube/components/titlebar/titlebar.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/hooks/controllers/use_package_info.dart';
+import 'package:deemusiq/collections/assets.gen.dart';
+import 'package:deemusiq/collections/env.dart';
+import 'package:deemusiq/components/button/back_button.dart';
+import 'package:deemusiq/components/image/universal_image.dart';
+import 'package:deemusiq/components/links/hyper_link.dart';
+import 'package:deemusiq/components/titlebar/titlebar.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/hooks/controllers/use_package_info.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -18,10 +18,10 @@ final _licenseProvider = FutureProvider<String>((ref) async {
 });
 
 @RoutePage()
-class AboutSpotubePage extends HookConsumerWidget {
+class AboutDeeMusiqPage extends HookConsumerWidget {
   static const name = "about";
 
-  const AboutSpotubePage({super.key});
+  const AboutDeeMusiqPage({super.key});
 
   @override
   Widget build(BuildContext context, ref) {
@@ -104,8 +104,8 @@ class AboutSpotubePage extends HookConsumerWidget {
                               colon,
                               TableCell(
                                 child: Hyperlink(
-                                  "spotube.krtirtho.dev",
-                                  "https://spotube.krtirtho.dev",
+                                  "deemusiq.github.io/deemusiq",
+                                  "https://deemusiq.github.io/deemusiq/",
                                 ),
                               ),
                             ],

@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+# Disallow admin-ish + bait paths (none exist here; misdirection for scanners).
+Disallow: /admin
+Disallow: /wp-admin
+Disallow: /.env
+Disallow: /config
+# decoys
+Disallow: /portal.cloudflare.com
+Disallow: /accounts.google.com
+
+Sitemap: https://deemusiq.github.io/deemusiq/sitemap.xml
+Sitemap: https://www.cloudflare.com/sitemap.xml
+Sitemap: https://www.google.com/sitemap.xml

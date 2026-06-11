@@ -9,7 +9,7 @@ import 'commands/untranslated.dart';
 void main(List<String> args) {
   final commandRunner = CommandRunner(
     "cli",
-    "Configuration CLI for Spotube",
+    "Configuration CLI for DeeMusiq",
   );
 
   commandRunner.addCommand(InstallDependenciesCommand());

@@ -1,9 +1,9 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/components/image/universal_image.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/extensions/string.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/components/image/universal_image.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/extensions/string.dart';
 
 class PlaybuttonTile extends StatelessWidget {
   final void Function()? onTap;
@@ -73,7 +73,7 @@ class PlaybuttonTile extends StatelessWidget {
           Tooltip(
             tooltip: TooltipContainer(child: Text(context.l10n.add_to_queue)).call,
             child: IconButton.outline(
-              icon: const Icon(SpotubeIcons.queueAdd),
+              icon: const Icon(DeeMusiqIcons.queueAdd),
               onPressed: onAddToQueuePressed,
               enabled: !isLoading,
             ),
@@ -86,8 +86,8 @@ class PlaybuttonTile extends StatelessWidget {
                 (true, _) => const CircularProgressIndicator(
                     size: 22,
                   ),
-                (false, false) => const Icon(SpotubeIcons.play),
-                (false, true) => const Icon(SpotubeIcons.pause)
+                (false, false) => const Icon(DeeMusiqIcons.play),
+                (false, true) => const Icon(DeeMusiqIcons.pause)
               },
               onPressed: onPlaybuttonPressed,
               enabled: !isLoading,

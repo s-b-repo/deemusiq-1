@@ -22,7 +22,7 @@ class IosBuildCommand extends Command with BuildCommandCommonSteps {
       """
       flutter build ios --release --no-codesign --flavor ${CliEnv.channel.name}
       ln -sf $buildDirPath Payload
-      zip -r9 Spotube-iOS.ipa ${join("Payload", "${CliEnv.channel.name}.app")}
+      zip -r9 DeeMusiq-iOS.ipa ${join("Payload", "${CliEnv.channel.name}.app")}
       """,
     );
   }

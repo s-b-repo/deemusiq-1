@@ -4,16 +4,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' hide Consumer;
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
-import 'package:spotube/collections/routes.gr.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/modules/player/player_controls.dart';
-import 'package:spotube/modules/player/player_queue.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/hooks/utils/use_force_update.dart';
-import 'package:spotube/pages/lyrics/plain_lyrics.dart';
-import 'package:spotube/pages/lyrics/synced_lyrics.dart';
-import 'package:spotube/provider/audio_player/audio_player.dart';
-import 'package:spotube/utils/platform.dart';
+import 'package:deemusiq/collections/routes.gr.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/modules/player/player_controls.dart';
+import 'package:deemusiq/modules/player/player_queue.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/hooks/utils/use_force_update.dart';
+import 'package:deemusiq/pages/lyrics/plain_lyrics.dart';
+import 'package:deemusiq/pages/lyrics/synced_lyrics.dart';
+import 'package:deemusiq/provider/audio_player/audio_player.dart';
+import 'package:deemusiq/utils/platform.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -96,8 +96,8 @@ class MiniLyricsPage extends HookConsumerWidget {
                             ? ButtonVariance.secondary
                             : ButtonVariance.ghost,
                         icon: showLyrics.value
-                            ? const Icon(SpotubeIcons.lyrics)
-                            : const Icon(SpotubeIcons.lyricsOff),
+                            ? const Icon(DeeMusiqIcons.lyrics)
+                            : const Icon(DeeMusiqIcons.lyricsOff),
                         onPressed: () async {
                           showLyrics.value = !showLyrics.value;
                           areaActive.value = true;
@@ -122,8 +122,8 @@ class MiniLyricsPage extends HookConsumerWidget {
                             ? ButtonVariance.secondary
                             : ButtonVariance.ghost,
                         icon: hoverMode.value
-                            ? const Icon(SpotubeIcons.hoverOn)
-                            : const Icon(SpotubeIcons.hoverOff),
+                            ? const Icon(DeeMusiqIcons.hoverOn)
+                            : const Icon(DeeMusiqIcons.hoverOff),
                         onPressed: () async {
                           areaActive.value = true;
                           hoverMode.value = !hoverMode.value;
@@ -144,8 +144,8 @@ class MiniLyricsPage extends HookConsumerWidget {
                                   : ButtonVariance.ghost,
                               icon: Icon(
                                 snapshot.data == true
-                                    ? SpotubeIcons.pinOn
-                                    : SpotubeIcons.pinOff,
+                                    ? DeeMusiqIcons.pinOn
+                                    : DeeMusiqIcons.pinOff,
                               ),
                               onPressed: snapshot.data == null
                                   ? null
@@ -202,7 +202,7 @@ class MiniLyricsPage extends HookConsumerWidget {
                       child: Text(context.l10n.queue),
                     ).call,
                     child: IconButton.ghost(
-                      icon: const Icon(SpotubeIcons.queue),
+                      icon: const Icon(DeeMusiqIcons.queue),
                       onPressed: playlistQueue.activeTrack != null
                           ? () {
                               openDrawer(
@@ -249,7 +249,7 @@ class MiniLyricsPage extends HookConsumerWidget {
                             child: Text(context.l10n.exit_mini_player))
                         .call,
                     child: IconButton.ghost(
-                      icon: const Icon(SpotubeIcons.maximize),
+                      icon: const Icon(DeeMusiqIcons.maximize),
                       onPressed: () async {
                         if (!kIsDesktop) return;
 

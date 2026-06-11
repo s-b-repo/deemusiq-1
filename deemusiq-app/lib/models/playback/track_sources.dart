@@ -1,15 +1,15 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:spotube/models/metadata/metadata.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
 
 part 'track_sources.g.dart';
 
 @JsonSerializable()
 class BasicSourcedTrack {
-  final SpotubeFullTrackObject query;
-  final SpotubeAudioSourceMatchObject info;
+  final DeeMusiqFullTrackObject query;
+  final DeeMusiqAudioSourceMatchObject info;
   final String source;
-  final List<SpotubeAudioSourceStreamObject> sources;
-  final List<SpotubeAudioSourceMatchObject> siblings;
+  final List<DeeMusiqAudioSourceStreamObject> sources;
+  final List<DeeMusiqAudioSourceMatchObject> siblings;
   BasicSourcedTrack({
     required this.query,
     required this.source,

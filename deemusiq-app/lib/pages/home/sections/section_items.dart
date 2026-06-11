@@ -4,15 +4,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:spotube/components/playbutton_view/playbutton_card.dart';
-import 'package:spotube/components/waypoint.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/modules/album/album_card.dart';
-import 'package:spotube/modules/artist/artist_card.dart';
-import 'package:spotube/modules/playlist/playlist_card.dart';
-import 'package:spotube/components/titlebar/titlebar.dart';
-import 'package:spotube/provider/metadata_plugin/browse/section_items.dart';
-import 'package:spotube/provider/metadata_plugin/utils/common.dart';
+import 'package:deemusiq/components/playbutton_view/playbutton_card.dart';
+import 'package:deemusiq/components/waypoint.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/modules/album/album_card.dart';
+import 'package:deemusiq/modules/artist/artist_card.dart';
+import 'package:deemusiq/modules/playlist/playlist_card.dart';
+import 'package:deemusiq/components/titlebar/titlebar.dart';
+import 'package:deemusiq/provider/metadata_plugin/browse/section_items.dart';
+import 'package:deemusiq/provider/metadata_plugin/utils/common.dart';
 
 const _dummyPlaybuttonCard = PlaybuttonCard(
   imageUrl: 'https://placehold.co/150x150.png',
@@ -28,7 +28,7 @@ class HomeBrowseSectionItemsPage extends HookConsumerWidget {
   static const name = "home_browse_section_items";
 
   final String sectionId;
-  final SpotubeBrowseSectionObject<Object> section;
+  final DeeMusiqBrowseSectionObject<Object> section;
   const HomeBrowseSectionItemsPage({
     super.key,
     @PathParam("sectionId") required this.sectionId,
@@ -98,9 +98,9 @@ class HomeBrowseSectionItemsPage extends HookConsumerWidget {
 
                     final item = items[index];
                     return switch (item) {
-                      SpotubeFullArtistObject() => ArtistCard(item),
-                      SpotubeSimplePlaylistObject() => PlaylistCard(item),
-                      SpotubeSimpleAlbumObject() => AlbumCard(item),
+                      DeeMusiqFullArtistObject() => ArtistCard(item),
+                      DeeMusiqSimplePlaylistObject() => PlaylistCard(item),
+                      DeeMusiqSimpleAlbumObject() => AlbumCard(item),
                       _ => throw Exception(
                           "Unsupported item type: ${item.runtimeType}",
                         ),

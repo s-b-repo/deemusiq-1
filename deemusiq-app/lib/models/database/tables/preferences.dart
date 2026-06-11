@@ -61,7 +61,7 @@ class PreferencesTable extends Table {
       .withDefault(Constant(CloseBehavior.close.name))();
   TextColumn get accentColorScheme => text()
       .withDefault(const Constant("Slate:0xff64748b"))
-      .map(const SpotubeColorConverter())();
+      .map(const DeeMusiqColorConverter())();
   TextColumn get layoutMode =>
       textEnum<LayoutMode>().withDefault(Constant(LayoutMode.adaptive.name))();
   TextColumn get locale => text()
@@ -102,7 +102,7 @@ class PreferencesTable extends Table {
       systemTitleBar: false,
       skipNonMusic: false,
       closeBehavior: CloseBehavior.close,
-      accentColorScheme: SpotubeColor(0xFFFF5722, name: "DeeMusiq Orange"),
+      accentColorScheme: DeeMusiqColor(0xFFFF5722, name: "DeeMusiq Orange"),
       layoutMode: LayoutMode.adaptive,
       locale: const Locale("system", "system"),
       market: Market.US,

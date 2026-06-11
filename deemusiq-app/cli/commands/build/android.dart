@@ -33,7 +33,7 @@ class AndroidBuildCommand extends Command with BuildCommandCommonSteps {
     );
 
     await ogApkFile.copy(
-      join(cwd.path, "build", "Spotube-android-all-arch.apk"),
+      join(cwd.path, "build", "DeeMusiq-android-all-arch.apk"),
     );
 
     stdout.writeln("✅ Built Android Apk and Appbundle");

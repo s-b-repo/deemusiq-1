@@ -1,13 +1,13 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotube/collections/env.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/audio_player/audio_player.dart';
-import 'package:spotube/services/audio_player/audio_player.dart';
-import 'package:spotube/services/audio_services/mobile_audio_service.dart';
-import 'package:spotube/services/audio_services/windows_audio_service.dart';
-import 'package:spotube/utils/platform.dart';
+import 'package:deemusiq/collections/env.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/audio_player/audio_player.dart';
+import 'package:deemusiq/services/audio_player/audio_player.dart';
+import 'package:deemusiq/services/audio_services/mobile_audio_service.dart';
+import 'package:deemusiq/services/audio_services/windows_audio_service.dart';
+import 'package:deemusiq/utils/platform.dart';
 
 class AudioServices with WidgetsBindingObserver {
   final MobileAudioService? mobile;
@@ -33,10 +33,10 @@ class AudioServices with WidgetsBindingObserver {
                 (_, ReleaseChannel.stable) => "oss.krtirtho.spotube",
                 (_, ReleaseChannel.nightly) => "oss.krtirtho.spotube.nightly",
               },
-              androidNotificationChannelName: 'Spotube',
+              androidNotificationChannelName: 'DeeMusiq',
               androidNotificationOngoing: false,
               androidStopForegroundOnPause: false,
-              androidNotificationChannelDescription: "Spotube Media Controls",
+              androidNotificationChannelDescription: "DeeMusiq Media Controls",
             ),
           )
         : null;
@@ -45,7 +45,7 @@ class AudioServices with WidgetsBindingObserver {
     return AudioServices(mobile, smtc);
   }
 
-  Future<void> addTrack(SpotubeTrackObject track) async {
+  Future<void> addTrack(DeeMusiqTrackObject track) async {
     await smtc?.addTrack(track);
     mobile?.addItem(MediaItem(
       id: track.id,

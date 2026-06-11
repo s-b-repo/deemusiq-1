@@ -12,62 +12,69 @@
 import 'package:auto_route/auto_route.dart' as _i41;
 import 'package:flutter/material.dart' as _i42;
 import 'package:shadcn_flutter/shadcn_flutter.dart' as _i44;
-import 'package:spotube/models/metadata/metadata.dart' as _i43;
-import 'package:spotube/pages/album/album.dart' as _i2;
-import 'package:spotube/pages/artist/artist.dart' as _i3;
-import 'package:spotube/pages/connect/connect.dart' as _i6;
-import 'package:spotube/pages/connect/control/control.dart' as _i5;
-import 'package:spotube/pages/getting_started/getting_started.dart' as _i7;
-import 'package:spotube/pages/home/home.dart' as _i9;
-import 'package:spotube/pages/home/sections/section_items.dart' as _i8;
-import 'package:spotube/pages/lastfm_login/lastfm_login.dart' as _i10;
-import 'package:spotube/pages/library/library.dart' as _i11;
-import 'package:spotube/pages/library/user_albums.dart' as _i36;
-import 'package:spotube/pages/library/user_artists.dart' as _i37;
-import 'package:spotube/pages/library/user_downloads.dart' as _i38;
-import 'package:spotube/pages/library/user_local_tracks/local_folder.dart'
+import 'package:deemusiq/models/metadata/metadata.dart' as _i43;
+import 'package:deemusiq/pages/album/album.dart' as _i2;
+import 'package:deemusiq/pages/artist/artist.dart' as _i3;
+import 'package:deemusiq/pages/connect/connect.dart' as _i6;
+import 'package:deemusiq/pages/connect/control/control.dart' as _i5;
+import 'package:deemusiq/pages/getting_started/getting_started.dart' as _i7;
+import 'package:deemusiq/pages/home/home.dart' as _i9;
+import 'package:deemusiq/pages/home/sections/section_items.dart' as _i8;
+import 'package:deemusiq/pages/lastfm_login/lastfm_login.dart' as _i10;
+import 'package:deemusiq/pages/library/library.dart' as _i11;
+import 'package:deemusiq/pages/library/user_albums.dart' as _i36;
+import 'package:deemusiq/pages/library/user_artists.dart' as _i37;
+import 'package:deemusiq/pages/library/user_downloads.dart' as _i38;
+import 'package:deemusiq/pages/library/user_local_tracks/local_folder.dart'
     as _i13;
-import 'package:spotube/pages/library/user_local_tracks/user_local_tracks.dart'
+import 'package:deemusiq/pages/library/user_local_tracks/user_local_tracks.dart'
     as _i39;
-import 'package:spotube/pages/library/user_playlists.dart' as _i40;
-import 'package:spotube/pages/lyrics/lyrics.dart' as _i15;
-import 'package:spotube/pages/lyrics/mini_lyrics.dart' as _i16;
-import 'package:spotube/pages/player/lyrics.dart' as _i17;
-import 'package:spotube/pages/player/queue.dart' as _i18;
-import 'package:spotube/pages/player/sources.dart' as _i19;
-import 'package:spotube/pages/playlist/liked_playlist.dart' as _i12;
-import 'package:spotube/pages/playlist/playlist.dart' as _i20;
-import 'package:spotube/pages/profile/profile.dart' as _i21;
-import 'package:spotube/pages/root/root_app.dart' as _i22;
-import 'package:spotube/pages/search/search.dart' as _i23;
-import 'package:spotube/pages/settings/about.dart' as _i1;
-import 'package:spotube/pages/settings/blacklist.dart' as _i4;
-import 'package:spotube/pages/settings/logs.dart' as _i14;
-import 'package:spotube/pages/settings/metadata/metadata_form.dart' as _i24;
-import 'package:spotube/pages/settings/metadata_plugins.dart' as _i25;
-import 'package:spotube/pages/settings/scrobbling/scrobbling.dart' as _i27;
-import 'package:spotube/pages/settings/settings.dart' as _i26;
-import 'package:spotube/pages/stats/albums/albums.dart' as _i28;
-import 'package:spotube/pages/stats/artists/artists.dart' as _i29;
-import 'package:spotube/pages/stats/fees/fees.dart' as _i33;
-import 'package:spotube/pages/stats/minutes/minutes.dart' as _i30;
-import 'package:spotube/pages/stats/playlists/playlists.dart' as _i32;
-import 'package:spotube/pages/stats/stats.dart' as _i31;
-import 'package:spotube/pages/stats/streams/streams.dart' as _i34;
-import 'package:spotube/pages/track/track.dart' as _i35;
+import 'package:deemusiq/pages/library/user_playlists.dart' as _i40;
+import 'package:deemusiq/pages/lyrics/lyrics.dart' as _i15;
+import 'package:deemusiq/pages/lyrics/mini_lyrics.dart' as _i16;
+import 'package:deemusiq/pages/player/lyrics.dart' as _i17;
+import 'package:deemusiq/pages/player/queue.dart' as _i18;
+import 'package:deemusiq/pages/player/sources.dart' as _i19;
+import 'package:deemusiq/pages/playlist/liked_playlist.dart' as _i12;
+import 'package:deemusiq/pages/playlist/playlist.dart' as _i20;
+import 'package:deemusiq/pages/profile/profile.dart' as _i21;
+import 'package:deemusiq/pages/root/root_app.dart' as _i22;
+import 'package:deemusiq/pages/search/search.dart' as _i23;
+import 'package:deemusiq/pages/settings/about.dart' as _i1;
+import 'package:deemusiq/pages/settings/blacklist.dart' as _i4;
+import 'package:deemusiq/pages/settings/logs.dart' as _i14;
+import 'package:deemusiq/pages/settings/metadata/metadata_form.dart' as _i24;
+import 'package:deemusiq/pages/settings/metadata_plugins.dart' as _i25;
+import 'package:deemusiq/pages/settings/scrobbling/scrobbling.dart' as _i27;
+import 'package:deemusiq/pages/settings/settings.dart' as _i26;
+import 'package:deemusiq/pages/stats/albums/albums.dart' as _i28;
+import 'package:deemusiq/pages/stats/artists/artists.dart' as _i29;
+import 'package:deemusiq/pages/stats/fees/fees.dart' as _i33;
+import 'package:deemusiq/pages/stats/minutes/minutes.dart' as _i30;
+import 'package:deemusiq/pages/stats/playlists/playlists.dart' as _i32;
+import 'package:deemusiq/pages/stats/stats.dart' as _i31;
+import 'package:deemusiq/pages/stats/streams/streams.dart' as _i34;
+import 'package:deemusiq/pages/track/track.dart' as _i35;
+import 'package:deemusiq/pages/wallet/creators_supported.dart' as _i45;
+import 'package:deemusiq/pages/wallet/leaderboard.dart' as _i46;
+import 'package:deemusiq/pages/wallet/linked_accounts.dart' as _i47;
+import 'package:deemusiq/pages/wallet/token_store.dart' as _i48;
+import 'package:deemusiq/pages/wallet/wallet.dart' as _i49;
+import 'package:deemusiq/pages/account/account.dart' as _i50;
+import 'package:deemusiq/pages/catalog/catalog.dart' as _i51;
 
 /// generated route for
-/// [_i1.AboutSpotubePage]
-class AboutSpotubeRoute extends _i41.PageRouteInfo<void> {
-  const AboutSpotubeRoute({List<_i41.PageRouteInfo>? children})
-    : super(AboutSpotubeRoute.name, initialChildren: children);
+/// [_i1.AboutDeeMusiqPage]
+class AboutDeeMusiqRoute extends _i41.PageRouteInfo<void> {
+  const AboutDeeMusiqRoute({List<_i41.PageRouteInfo>? children})
+    : super(AboutDeeMusiqRoute.name, initialChildren: children);
 
-  static const String name = 'AboutSpotubeRoute';
+  static const String name = 'AboutDeeMusiqRoute';
 
   static _i41.PageInfo page = _i41.PageInfo(
     name,
     builder: (data) {
-      return const _i1.AboutSpotubePage();
+      return const _i1.AboutDeeMusiqPage();
     },
   );
 }
@@ -78,7 +85,7 @@ class AlbumRoute extends _i41.PageRouteInfo<AlbumRouteArgs> {
   AlbumRoute({
     _i42.Key? key,
     required String id,
-    required _i43.SpotubeSimpleAlbumObject album,
+    required _i43.DeeMusiqSimpleAlbumObject album,
     List<_i41.PageRouteInfo>? children,
   }) : super(
          AlbumRoute.name,
@@ -105,7 +112,7 @@ class AlbumRouteArgs {
 
   final String id;
 
-  final _i43.SpotubeSimpleAlbumObject album;
+  final _i43.DeeMusiqSimpleAlbumObject album;
 
   @override
   String toString() {
@@ -225,7 +232,7 @@ class HomeBrowseSectionItemsRoute
   HomeBrowseSectionItemsRoute({
     _i44.Key? key,
     required String sectionId,
-    required _i43.SpotubeBrowseSectionObject<Object> section,
+    required _i43.DeeMusiqBrowseSectionObject<Object> section,
     List<_i41.PageRouteInfo>? children,
   }) : super(
          HomeBrowseSectionItemsRoute.name,
@@ -264,7 +271,7 @@ class HomeBrowseSectionItemsRouteArgs {
 
   final String sectionId;
 
-  final _i43.SpotubeBrowseSectionObject<Object> section;
+  final _i43.DeeMusiqBrowseSectionObject<Object> section;
 
   @override
   String toString() {
@@ -325,7 +332,7 @@ class LibraryRoute extends _i41.PageRouteInfo<void> {
 class LikedPlaylistRoute extends _i41.PageRouteInfo<LikedPlaylistRouteArgs> {
   LikedPlaylistRoute({
     _i42.Key? key,
-    required _i43.SpotubeSimplePlaylistObject playlist,
+    required _i43.DeeMusiqSimplePlaylistObject playlist,
     List<_i41.PageRouteInfo>? children,
   }) : super(
          LikedPlaylistRoute.name,
@@ -349,7 +356,7 @@ class LikedPlaylistRouteArgs {
 
   final _i42.Key? key;
 
-  final _i43.SpotubeSimplePlaylistObject playlist;
+  final _i43.DeeMusiqSimplePlaylistObject playlist;
 
   @override
   String toString() {
@@ -538,7 +545,7 @@ class PlaylistRoute extends _i41.PageRouteInfo<PlaylistRouteArgs> {
   PlaylistRoute({
     _i42.Key? key,
     required String id,
-    required _i43.SpotubeSimplePlaylistObject playlist,
+    required _i43.DeeMusiqSimplePlaylistObject playlist,
     List<_i41.PageRouteInfo>? children,
   }) : super(
          PlaylistRoute.name,
@@ -569,7 +576,7 @@ class PlaylistRouteArgs {
 
   final String id;
 
-  final _i43.SpotubeSimplePlaylistObject playlist;
+  final _i43.DeeMusiqSimplePlaylistObject playlist;
 
   @override
   String toString() {
@@ -955,6 +962,118 @@ class UserPlaylistsRoute extends _i41.PageRouteInfo<void> {
     name,
     builder: (data) {
       return const _i40.UserPlaylistsPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i45.CreatorsSupportedPage]
+class CreatorsSupportedRoute extends _i41.PageRouteInfo<void> {
+  const CreatorsSupportedRoute({List<_i41.PageRouteInfo>? children})
+    : super(CreatorsSupportedRoute.name, initialChildren: children);
+
+  static const String name = 'CreatorsSupportedRoute';
+
+  static _i41.PageInfo page = _i41.PageInfo(
+    name,
+    builder: (data) {
+      return const _i45.CreatorsSupportedPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i46.PushLeaderboardPage]
+class PushLeaderboardRoute extends _i41.PageRouteInfo<void> {
+  const PushLeaderboardRoute({List<_i41.PageRouteInfo>? children})
+    : super(PushLeaderboardRoute.name, initialChildren: children);
+
+  static const String name = 'PushLeaderboardRoute';
+
+  static _i41.PageInfo page = _i41.PageInfo(
+    name,
+    builder: (data) {
+      return const _i46.PushLeaderboardPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i47.LinkedAccountsPage]
+class LinkedAccountsRoute extends _i41.PageRouteInfo<void> {
+  const LinkedAccountsRoute({List<_i41.PageRouteInfo>? children})
+    : super(LinkedAccountsRoute.name, initialChildren: children);
+
+  static const String name = 'LinkedAccountsRoute';
+
+  static _i41.PageInfo page = _i41.PageInfo(
+    name,
+    builder: (data) {
+      return const _i47.LinkedAccountsPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i48.TokenStorePage]
+class TokenStoreRoute extends _i41.PageRouteInfo<void> {
+  const TokenStoreRoute({List<_i41.PageRouteInfo>? children})
+    : super(TokenStoreRoute.name, initialChildren: children);
+
+  static const String name = 'TokenStoreRoute';
+
+  static _i41.PageInfo page = _i41.PageInfo(
+    name,
+    builder: (data) {
+      return const _i48.TokenStorePage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i49.WalletPage]
+class WalletRoute extends _i41.PageRouteInfo<void> {
+  const WalletRoute({List<_i41.PageRouteInfo>? children})
+    : super(WalletRoute.name, initialChildren: children);
+
+  static const String name = 'WalletRoute';
+
+  static _i41.PageInfo page = _i41.PageInfo(
+    name,
+    builder: (data) {
+      return const _i49.WalletPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i50.AccountPage]
+class AccountRoute extends _i41.PageRouteInfo<void> {
+  const AccountRoute({List<_i41.PageRouteInfo>? children})
+    : super(AccountRoute.name, initialChildren: children);
+
+  static const String name = 'AccountRoute';
+
+  static _i41.PageInfo page = _i41.PageInfo(
+    name,
+    builder: (data) {
+      return const _i50.AccountPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i51.CatalogPage]
+class CatalogRoute extends _i41.PageRouteInfo<void> {
+  const CatalogRoute({List<_i41.PageRouteInfo>? children})
+    : super(CatalogRoute.name, initialChildren: children);
+
+  static const String name = 'CatalogRoute';
+
+  static _i41.PageInfo page = _i41.PageInfo(
+    name,
+    builder: (data) {
+      return const _i51.CatalogPage();
     },
   );
 }

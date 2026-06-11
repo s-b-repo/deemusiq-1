@@ -4,24 +4,24 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fuzzywuzzy/fuzzywuzzy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:spotube/collections/routes.gr.dart';
+import 'package:deemusiq/collections/routes.gr.dart';
 
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/components/fallbacks/error_box.dart';
-import 'package:spotube/components/fallbacks/no_default_metadata_plugin.dart';
-import 'package:spotube/components/titlebar/titlebar.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/extensions/string.dart';
-import 'package:spotube/hooks/controllers/use_shadcn_text_editing_controller.dart';
-import 'package:spotube/pages/search/tabs/albums.dart';
-import 'package:spotube/pages/search/tabs/all.dart';
-import 'package:spotube/pages/search/tabs/artists.dart';
-import 'package:spotube/pages/search/tabs/playlists.dart';
-import 'package:spotube/pages/search/tabs/tracks.dart';
-import 'package:spotube/provider/metadata_plugin/search/all.dart';
-import 'package:spotube/services/kv_store/kv_store.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/components/fallbacks/error_box.dart';
+import 'package:deemusiq/components/fallbacks/no_default_metadata_plugin.dart';
+import 'package:deemusiq/components/titlebar/titlebar.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/extensions/string.dart';
+import 'package:deemusiq/hooks/controllers/use_shadcn_text_editing_controller.dart';
+import 'package:deemusiq/pages/search/tabs/albums.dart';
+import 'package:deemusiq/pages/search/tabs/all.dart';
+import 'package:deemusiq/pages/search/tabs/artists.dart';
+import 'package:deemusiq/pages/search/tabs/playlists.dart';
+import 'package:deemusiq/pages/search/tabs/tracks.dart';
+import 'package:deemusiq/provider/metadata_plugin/search/all.dart';
+import 'package:deemusiq/services/kv_store/kv_store.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:spotube/services/metadata/errors/exceptions.dart';
+import 'package:deemusiq/services/metadata/errors/exceptions.dart';
 
 final searchTermStateProvider = StateProvider<String>((ref) {
   return "";
@@ -59,6 +59,7 @@ class SearchPage extends HookConsumerWidget {
 
     void onSubmitted(String value) {
       ref.read(searchTermStateProvider.notifier).state = value;
+      focusNode.unfocus();
       if (value.trim().isEmpty) {
         return;
       }
@@ -127,61 +128,48 @@ class SearchPage extends HookConsumerWidget {
                                       )
                                       .toList();
 
-                              return KeyboardListener(
-                                focusNode: focusNode,
-                                autofocus: true,
-                                onKeyEvent: (value) {
-                                  final isEnter = value.logicalKey ==
-                                      LogicalKeyboardKey.enter;
-
-                                  if (isEnter) {
-                                    onSubmitted(controller.text);
-                                    focusNode.unfocus();
-                                  }
-                                },
-                                child: AutoComplete(
-                                  suggestions: suggestions.length <= 2
-                                      ? [
-                                          ...suggestions,
-                                          "Twenty One Pilots",
-                                          "Linkin Park",
-                                          "d4vd"
-                                        ]
-                                      : suggestions,
-                                  completer: (suggestion) => suggestion,
-                                  mode: AutoCompleteMode.replaceAll,
-                                  child: TextField(
-                                    autofocus: true,
-                                    controller: controller,
-                                    features: [
-                                      const InputFeature.leading(
-                                        Icon(SpotubeIcons.search),
-                                      ),
-                                      InputFeature.trailing(
-                                        AnimatedCrossFade(
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                          crossFadeState:
-                                              controller.text.isNotEmpty
-                                                  ? CrossFadeState.showFirst
-                                                  : CrossFadeState.showSecond,
-                                          firstChild: IconButton.ghost(
-                                            size: ButtonSize.small,
-                                            icon:
-                                                const Icon(SpotubeIcons.close),
-                                            onPressed: () {
-                                              controller.clear();
-                                            },
-                                          ),
-                                          secondChild: const SizedBox.square(
-                                              dimension: 28),
+                              return AutoComplete(
+                                suggestions: suggestions.length <= 2
+                                    ? [
+                                        ...suggestions,
+                                        "Tyla",
+                                        "Kabza De Small",
+                                        "Black Coffee",
+                                      ]
+                                    : suggestions,
+                                completer: (suggestion) => suggestion,
+                                mode: AutoCompleteMode.replaceAll,
+                                child: TextField(
+                                  autofocus: true,
+                                  controller: controller,
+                                  focusNode: focusNode,
+                                  features: [
+                                    const InputFeature.leading(
+                                      Icon(DeeMusiqIcons.search),
+                                    ),
+                                    InputFeature.trailing(
+                                      AnimatedCrossFade(
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        crossFadeState:
+                                            controller.text.isNotEmpty
+                                                ? CrossFadeState.showFirst
+                                                : CrossFadeState.showSecond,
+                                        firstChild: IconButton.ghost(
+                                          size: ButtonSize.small,
+                                          icon: const Icon(DeeMusiqIcons.close),
+                                          onPressed: () {
+                                            controller.clear();
+                                          },
                                         ),
-                                      )
-                                    ],
-                                    textInputAction: TextInputAction.search,
-                                    placeholder: Text(context.l10n.search),
-                                    onSubmitted: onSubmitted,
-                                  ),
+                                        secondChild: const SizedBox.square(
+                                            dimension: 28),
+                                      ),
+                                    )
+                                  ],
+                                  textInputAction: TextInputAction.search,
+                                  placeholder: Text(context.l10n.search),
+                                  onSubmitted: onSubmitted,
                                 ),
                               );
                             }),

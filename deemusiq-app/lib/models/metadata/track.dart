@@ -1,58 +1,58 @@
 part of 'metadata.dart';
 
 @freezed
-class SpotubeTrackObject with _$SpotubeTrackObject {
-  factory SpotubeTrackObject.local({
+class DeeMusiqTrackObject with _$DeeMusiqTrackObject {
+  factory DeeMusiqTrackObject.local({
     required String id,
     required String name,
     required String externalUri,
-    @Default([]) List<SpotubeSimpleArtistObject> artists,
-    required SpotubeSimpleAlbumObject album,
+    @Default([]) List<DeeMusiqSimpleArtistObject> artists,
+    required DeeMusiqSimpleAlbumObject album,
     required int durationMs,
     required String path,
-  }) = SpotubeLocalTrackObject;
+  }) = DeeMusiqLocalTrackObject;
 
-  factory SpotubeTrackObject.full({
+  factory DeeMusiqTrackObject.full({
     required String id,
     required String name,
     required String externalUri,
-    @Default([]) List<SpotubeSimpleArtistObject> artists,
-    required SpotubeSimpleAlbumObject album,
+    @Default([]) List<DeeMusiqSimpleArtistObject> artists,
+    required DeeMusiqSimpleAlbumObject album,
     required int durationMs,
     required String isrc,
     required bool explicit,
-  }) = SpotubeFullTrackObject;
+  }) = DeeMusiqFullTrackObject;
 
-  factory SpotubeTrackObject.localTrackFromFile(
+  factory DeeMusiqTrackObject.localTrackFromFile(
     File file, {
     Metadata? metadata,
     String? art,
   }) {
-    return SpotubeLocalTrackObject(
+    return DeeMusiqLocalTrackObject(
       id: file.absolute.path,
       name: metadata?.title ?? basenameWithoutExtension(file.path),
       externalUri: "file://${file.absolute.path}",
       artists: metadata?.artist?.split(",").map((a) {
-            return SpotubeSimpleArtistObject(
+            return DeeMusiqSimpleArtistObject(
               id: a.trim(),
               name: a.trim(),
               externalUri: "file://${file.absolute.path}",
             );
           }).toList() ??
           [
-            SpotubeSimpleArtistObject(
+            DeeMusiqSimpleArtistObject(
               id: "unknown",
               name: "Unknown Artist",
               externalUri: "file://${file.absolute.path}",
             ),
           ],
-      album: SpotubeSimpleAlbumObject(
-        albumType: SpotubeAlbumType.album,
+      album: DeeMusiqSimpleAlbumObject(
+        albumType: DeeMusiqAlbumType.album,
         id: metadata?.album ?? "unknown",
         name: metadata?.album ?? "Unknown Album",
         externalUri: "file://${file.absolute.path}",
         artists: [
-          SpotubeSimpleArtistObject(
+          DeeMusiqSimpleArtistObject(
             id: metadata?.albumArtist ?? "unknown",
             name: metadata?.albumArtist ?? "Unknown Artist",
             externalUri: "file://${file.absolute.path}",
@@ -62,7 +62,7 @@ class SpotubeTrackObject with _$SpotubeTrackObject {
             metadata?.year != null ? "${metadata!.year}-01-01" : "1970-01-01",
         images: [
           if (art != null)
-            SpotubeImageObject(
+            DeeMusiqImageObject(
               url: art,
               width: 300,
               height: 300,
@@ -74,21 +74,21 @@ class SpotubeTrackObject with _$SpotubeTrackObject {
     );
   }
 
-  factory SpotubeTrackObject.fromJson(Map<String, dynamic> json) =>
-      _$SpotubeTrackObjectFromJson(
+  factory DeeMusiqTrackObject.fromJson(Map<String, dynamic> json) =>
+      _$DeeMusiqTrackObjectFromJson(
         json.containsKey("path")
             ? {...json, "runtimeType": "local"}
             : {...json, "runtimeType": "full"},
       );
 }
 
-extension AsMediaListSpotubeTrackObject on Iterable<SpotubeTrackObject> {
-  List<SpotubeMedia> asMediaList() {
-    return map((track) => SpotubeMedia(track)).toList();
+extension AsMediaListDeeMusiqTrackObject on Iterable<DeeMusiqTrackObject> {
+  List<DeeMusiqMedia> asMediaList() {
+    return map((track) => DeeMusiqMedia(track)).toList();
   }
 }
 
-extension ToMetadataSpotubeFullTrackObject on SpotubeFullTrackObject {
+extension ToMetadataDeeMusiqFullTrackObject on DeeMusiqFullTrackObject {
   Metadata toMetadata({
     required int fileLength,
     Uint8List? imageBytes,

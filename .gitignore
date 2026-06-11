@@ -12,8 +12,28 @@ deemusiq-app/.flutter-plugins-dependencies
 deemusiq-app/android/.gradle/
 deemusiq-app/**/Pods/
 
-# Secrets — never commit signing keys
+# Backend (Node + TypeScript) — generated / installed, never commit
+# (backend/ also has its own .gitignore; these are a root-level safety net so an
+# accidental `git add backend/` can't pull in dependencies, build output or a DB)
+backend/node_modules/
+backend/dist/
+backend/data/
+backend/*.db
+backend/*.db-journal
+backend/prisma/*.db
+backend/prisma/*.db-journal
+
+# Node — anywhere in the tree
+node_modules/
+dist/
+npm-debug.log*
+yarn-error.log*
+
+# Secrets — never commit signing keys or env files
 *.jks
 *.keystore
 key.properties
+.env
+.env.*
+!.env.example
 *.env

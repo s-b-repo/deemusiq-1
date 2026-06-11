@@ -1,42 +1,42 @@
 part of 'metadata.dart';
 
-enum SpotubeAlbumType {
+enum DeeMusiqAlbumType {
   album,
   single,
   compilation,
 }
 
 @freezed
-class SpotubeFullAlbumObject with _$SpotubeFullAlbumObject {
-  factory SpotubeFullAlbumObject({
+class DeeMusiqFullAlbumObject with _$DeeMusiqFullAlbumObject {
+  factory DeeMusiqFullAlbumObject({
     required String id,
     required String name,
-    required List<SpotubeSimpleArtistObject> artists,
-    @Default([]) List<SpotubeImageObject> images,
+    required List<DeeMusiqSimpleArtistObject> artists,
+    @Default([]) List<DeeMusiqImageObject> images,
     required String releaseDate,
     required String externalUri,
     required int totalTracks,
-    required SpotubeAlbumType albumType,
+    required DeeMusiqAlbumType albumType,
     String? recordLabel,
     List<String>? genres,
-  }) = _SpotubeFullAlbumObject;
+  }) = _DeeMusiqFullAlbumObject;
 
-  factory SpotubeFullAlbumObject.fromJson(Map<String, dynamic> json) =>
-      _$SpotubeFullAlbumObjectFromJson(json);
+  factory DeeMusiqFullAlbumObject.fromJson(Map<String, dynamic> json) =>
+      _$DeeMusiqFullAlbumObjectFromJson(json);
 }
 
 @freezed
-class SpotubeSimpleAlbumObject with _$SpotubeSimpleAlbumObject {
-  factory SpotubeSimpleAlbumObject({
+class DeeMusiqSimpleAlbumObject with _$DeeMusiqSimpleAlbumObject {
+  factory DeeMusiqSimpleAlbumObject({
     required String id,
     required String name,
     required String externalUri,
-    required List<SpotubeSimpleArtistObject> artists,
-    @Default([]) List<SpotubeImageObject> images,
-    required SpotubeAlbumType albumType,
+    required List<DeeMusiqSimpleArtistObject> artists,
+    @Default([]) List<DeeMusiqImageObject> images,
+    required DeeMusiqAlbumType albumType,
     String? releaseDate,
-  }) = _SpotubeSimpleAlbumObject;
+  }) = _DeeMusiqSimpleAlbumObject;
 
-  factory SpotubeSimpleAlbumObject.fromJson(Map<String, dynamic> json) =>
-      _$SpotubeSimpleAlbumObjectFromJson(json);
+  factory DeeMusiqSimpleAlbumObject.fromJson(Map<String, dynamic> json) =>
+      _$DeeMusiqSimpleAlbumObjectFromJson(json);
 }

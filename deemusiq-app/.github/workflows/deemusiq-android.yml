@@ -4,6 +4,13 @@ name: Build DeeMusiq (Android APK)
 #  • Manual:  Actions tab → "Build DeeMusiq (Android APK)" → Run workflow
 #  • Release: push a tag like v1.0.0  →  APK is attached to a GitHub Release
 #
+# NOTE — this copy is for when ONLY the deemusiq-app/ folder is uploaded as its own
+# GitHub repo (see README.DEEMUSIQ.md): there is no deemusiq-app/ prefix, so it has
+# no working-directory and uploads dist/DeeMusiq.apk directly. In the full monorepo
+# this copy does NOT run (GitHub only auto-discovers workflows under the repo-root
+# .github/); the root .github/workflows/deemusiq-android.yml builds there instead.
+# Keep both in sync — they are intentionally near-identical, not a conflict.
+#
 # Signing:
 #  • For testing, this generates a TEMPORARY keystore automatically — the APK
 #    installs fine for sideloading.
@@ -19,6 +26,10 @@ on:
 
 permissions:
   contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   FLUTTER_VERSION: "3.35.2"
@@ -55,6 +66,24 @@ jobs:
         run: |
           dart run flutter_launcher_icons -f flutter_launcher_icons.yaml || dart run flutter_launcher_icons
           dart run flutter_native_splash:create
+
+      - name: Create .env (required by envied code generation)
+        # env.dart is annotated @Envied(requireEnvFile: true, path: ".env"), so
+        # build_runner aborts if .env is missing. The LastFM keys may be empty
+        # (scrobbling just stays off); the build still succeeds. Set repo secrets
+        # LASTFM_API_KEY / LASTFM_API_SECRET to enable Last.fm scrobbling.
+        # Secrets are passed via env: (not interpolated into the script body).
+        env:
+          LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
+          LASTFM_API_SECRET: ${{ secrets.LASTFM_API_SECRET }}
+        run: |
+          cat > .env <<EOF
+          LASTFM_API_KEY=${LASTFM_API_KEY}
+          LASTFM_API_SECRET=${LASTFM_API_SECRET}
+          ENABLE_UPDATE_CHECK=1
+          RELEASE_CHANNEL=stable
+          HIDE_DONATIONS=0
+          EOF
 
       - name: Generate code (build_runner)
         run: dart run build_runner build --delete-conflicting-outputs

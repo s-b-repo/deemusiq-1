@@ -1,11 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:spotube/collections/fake.dart';
-import 'package:spotube/components/horizontal_playbutton_card_view/horizontal_playbutton_card_view.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/models/database/database.dart';
-import 'package:spotube/provider/history/recent.dart';
+import 'package:deemusiq/collections/fake.dart';
+import 'package:deemusiq/components/horizontal_playbutton_card_view/horizontal_playbutton_card_view.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/models/database/database.dart';
+import 'package:deemusiq/provider/history/recent.dart';
 
 class HomeRecentlyPlayedSection extends HookConsumerWidget {
   const HomeRecentlyPlayedSection({super.key});

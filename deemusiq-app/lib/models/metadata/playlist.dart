@@ -1,34 +1,34 @@
 part of 'metadata.dart';
 
 @freezed
-class SpotubeFullPlaylistObject with _$SpotubeFullPlaylistObject {
-  factory SpotubeFullPlaylistObject({
+class DeeMusiqFullPlaylistObject with _$DeeMusiqFullPlaylistObject {
+  factory DeeMusiqFullPlaylistObject({
     required String id,
     required String name,
     required String description,
     required String externalUri,
-    required SpotubeUserObject owner,
-    @Default([]) List<SpotubeImageObject> images,
-    @Default([]) List<SpotubeUserObject> collaborators,
+    required DeeMusiqUserObject owner,
+    @Default([]) List<DeeMusiqImageObject> images,
+    @Default([]) List<DeeMusiqUserObject> collaborators,
     @Default(false) bool collaborative,
     @Default(false) bool public,
-  }) = _SpotubeFullPlaylistObject;
+  }) = _DeeMusiqFullPlaylistObject;
 
-  factory SpotubeFullPlaylistObject.fromJson(Map<String, dynamic> json) =>
-      _$SpotubeFullPlaylistObjectFromJson(json);
+  factory DeeMusiqFullPlaylistObject.fromJson(Map<String, dynamic> json) =>
+      _$DeeMusiqFullPlaylistObjectFromJson(json);
 }
 
 @freezed
-class SpotubeSimplePlaylistObject with _$SpotubeSimplePlaylistObject {
-  factory SpotubeSimplePlaylistObject({
+class DeeMusiqSimplePlaylistObject with _$DeeMusiqSimplePlaylistObject {
+  factory DeeMusiqSimplePlaylistObject({
     required String id,
     required String name,
     required String description,
     required String externalUri,
-    required SpotubeUserObject owner,
-    @Default([]) List<SpotubeImageObject> images,
-  }) = _SpotubeSimplePlaylistObject;
+    required DeeMusiqUserObject owner,
+    @Default([]) List<DeeMusiqImageObject> images,
+  }) = _DeeMusiqSimplePlaylistObject;
 
-  factory SpotubeSimplePlaylistObject.fromJson(Map<String, dynamic> json) =>
-      _$SpotubeSimplePlaylistObjectFromJson(json);
+  factory DeeMusiqSimplePlaylistObject.fromJson(Map<String, dynamic> json) =>
+      _$DeeMusiqSimplePlaylistObjectFromJson(json);
 }

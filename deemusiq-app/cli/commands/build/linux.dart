@@ -93,7 +93,7 @@ class LinuxBuildCommand extends Command with BuildCommandCommonSteps {
       join(
         cwd.path,
         "dist",
-        "Spotube-linux-$bundleArchName.deb",
+        "DeeMusiq-linux-$bundleArchName.deb",
       ),
     );
     await ogDeb.delete();
@@ -109,7 +109,7 @@ class LinuxBuildCommand extends Command with BuildCommandCommonSteps {
       );
 
       await ogRpm.copy(
-        join(cwd.path, "dist", "Spotube-linux-$bundleArchName.rpm"),
+        join(cwd.path, "dist", "DeeMusiq-linux-$bundleArchName.rpm"),
       );
 
       await ogRpm.delete();
@@ -127,7 +127,7 @@ class LinuxBuildCommand extends Command with BuildCommandCommonSteps {
       join(
         cwd.path,
         "dist",
-        "Spotube-linux-$bundleArchName.AppImage",
+        "DeeMusiq-linux-$bundleArchName.AppImage",
       ),
     );
     await ogAppImage.delete();

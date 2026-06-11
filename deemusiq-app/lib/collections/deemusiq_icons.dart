@@ -3,7 +3,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:simple_icons/simple_icons.dart';
 
-abstract class SpotubeIcons {
+abstract class DeeMusiqIcons {
   static const home = FluentIcons.home_12_regular;
   static const search = FeatherIcons.search;
   static const library = FluentIcons.library_16_regular;
@@ -140,4 +140,28 @@ abstract class SpotubeIcons {
   static const upload = FeatherIcons.uploadCloud;
   static const plugin = Icons.extension_outlined;
   static const warning = FeatherIcons.alertTriangle;
+
+  // DeeMusiq wallet / monetization (material glyphs — brand fidelity via colour)
+  static const wallet = Icons.account_balance_wallet_rounded;
+  static const walletOutlined = Icons.account_balance_wallet_outlined;
+  static const token = Icons.monetization_on_rounded;
+  static const tokenOutlined = Icons.monetization_on_outlined;
+  static const boost = Icons.rocket_launch_rounded;
+  static const trophy = Icons.emoji_events_rounded;
+  static const trending = Icons.trending_up_rounded;
+  static const creditCard = Icons.credit_card_rounded;
+  static const bitcoin = Icons.currency_bitcoin;
+  static const ethereum = Icons.currency_exchange;
+  static const monero = Icons.toll_rounded;
+  static const tether = Icons.attach_money_rounded;
+  static const gift = Icons.card_giftcard_rounded;
+  static const receipt = Icons.receipt_long_rounded;
+  static const verified = Icons.verified_rounded;
+  static const lock = FeatherIcons.lock;
+  static const shield = FeatherIcons.shield;
+  static const region = Icons.public_rounded;
+  static const spotify = Icons.graphic_eq_rounded;
+  static const appleMusic = Icons.album_rounded;
+  static const deezer = Icons.equalizer_rounded;
+  static const tidal = Icons.waves_rounded;
 }

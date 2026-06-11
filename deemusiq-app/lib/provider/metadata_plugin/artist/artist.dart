@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/metadata_plugin/metadata_plugin_provider.dart';
-import 'package:spotube/provider/metadata_plugin/utils/common.dart';
-import 'package:spotube/services/metadata/errors/exceptions.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/metadata_plugin/metadata_plugin_provider.dart';
+import 'package:deemusiq/provider/metadata_plugin/utils/common.dart';
+import 'package:deemusiq/services/metadata/errors/exceptions.dart';
 
 final metadataPluginArtistProvider =
-    FutureProvider.autoDispose.family<SpotubeFullArtistObject, String>(
+    FutureProvider.autoDispose.family<DeeMusiqFullArtistObject, String>(
   (ref, artistId) async {
     ref.cacheFor();
 

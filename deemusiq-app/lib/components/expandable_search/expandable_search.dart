@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/extensions/context.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/extensions/context.dart';
 
 class ExpandableSearchField extends StatelessWidget {
   final bool isFiltering;
@@ -41,7 +41,7 @@ class ExpandableSearchField extends StatelessWidget {
                 controller: searchController,
                 placeholder: Text(context.l10n.search_tracks),
                 features: const [
-                  InputFeature.leading(Icon(SpotubeIcons.search))
+                  InputFeature.leading(Icon(DeeMusiqIcons.search))
                 ],
               ),
             ),
@@ -62,7 +62,7 @@ class ExpandableSearchButton extends StatelessWidget {
     super.key,
     required this.isFiltering,
     required this.searchFocus,
-    this.icon = const Icon(SpotubeIcons.filter),
+    this.icon = const Icon(DeeMusiqIcons.filter),
     this.onPressed,
   });
 

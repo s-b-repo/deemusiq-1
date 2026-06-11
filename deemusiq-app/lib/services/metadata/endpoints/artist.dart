@@ -1,6 +1,6 @@
 import 'package:hetu_script/hetu_script.dart';
 import 'package:hetu_script/values.dart';
-import 'package:spotube/models/metadata/metadata.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
 
 class MetadataPluginArtistEndpoint {
   final Hetu hetu;
@@ -10,16 +10,16 @@ class MetadataPluginArtistEndpoint {
       (hetu.fetch("metadataPlugin") as HTInstance).memberGet("artist")
           as HTInstance;
 
-  Future<SpotubeFullArtistObject> getArtist(String id) async {
+  Future<DeeMusiqFullArtistObject> getArtist(String id) async {
     final raw = await hetuMetadataArtist
         .invoke("getArtist", positionalArgs: [id]) as Map;
 
-    return SpotubeFullArtistObject.fromJson(
+    return DeeMusiqFullArtistObject.fromJson(
       raw.cast<String, dynamic>(),
     );
   }
 
-  Future<SpotubePaginationResponseObject<SpotubeFullTrackObject>> topTracks(
+  Future<DeeMusiqPaginationResponseObject<DeeMusiqFullTrackObject>> topTracks(
     String id, {
     int? offset,
     int? limit,
@@ -33,15 +33,15 @@ class MetadataPluginArtistEndpoint {
       }..removeWhere((key, value) => value == null),
     ) as Map;
 
-    return SpotubePaginationResponseObject<SpotubeFullTrackObject>.fromJson(
+    return DeeMusiqPaginationResponseObject<DeeMusiqFullTrackObject>.fromJson(
       raw.cast<String, dynamic>(),
-      (Map json) => SpotubeFullTrackObject.fromJson(
+      (Map json) => DeeMusiqFullTrackObject.fromJson(
         json.cast<String, dynamic>(),
       ),
     );
   }
 
-  Future<SpotubePaginationResponseObject<SpotubeSimpleAlbumObject>> albums(
+  Future<DeeMusiqPaginationResponseObject<DeeMusiqSimpleAlbumObject>> albums(
     String id, {
     int? offset,
     int? limit,
@@ -55,9 +55,9 @@ class MetadataPluginArtistEndpoint {
       }..removeWhere((key, value) => value == null),
     ) as Map;
 
-    return SpotubePaginationResponseObject<SpotubeSimpleAlbumObject>.fromJson(
+    return DeeMusiqPaginationResponseObject<DeeMusiqSimpleAlbumObject>.fromJson(
       raw.cast<String, dynamic>(),
-      (Map json) => SpotubeSimpleAlbumObject.fromJson(
+      (Map json) => DeeMusiqSimpleAlbumObject.fromJson(
         json.cast<String, dynamic>(),
       ),
     );
@@ -77,7 +77,7 @@ class MetadataPluginArtistEndpoint {
     );
   }
 
-  Future<SpotubePaginationResponseObject<SpotubeFullArtistObject>> related(
+  Future<DeeMusiqPaginationResponseObject<DeeMusiqFullArtistObject>> related(
     String id, {
     int? offset,
     int? limit,
@@ -91,9 +91,9 @@ class MetadataPluginArtistEndpoint {
       }..removeWhere((key, value) => value == null),
     ) as Map;
 
-    return SpotubePaginationResponseObject<SpotubeFullArtistObject>.fromJson(
+    return DeeMusiqPaginationResponseObject<DeeMusiqFullArtistObject>.fromJson(
       raw.cast<String, dynamic>(),
-      (Map json) => SpotubeFullArtistObject.fromJson(
+      (Map json) => DeeMusiqFullArtistObject.fromJson(
         json.cast<String, dynamic>(),
       ),
     );

@@ -1,14 +1,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
-import 'package:spotube/components/fallbacks/error_box.dart';
-import 'package:spotube/components/inter_scrollbar/inter_scrollbar.dart';
-import 'package:spotube/modules/search/loading.dart';
-import 'package:spotube/pages/search/search.dart';
-import 'package:spotube/modules/search/sections/albums.dart';
-import 'package:spotube/modules/search/sections/artists.dart';
-import 'package:spotube/modules/search/sections/playlists.dart';
-import 'package:spotube/modules/search/sections/tracks.dart';
-import 'package:spotube/provider/metadata_plugin/search/all.dart';
+import 'package:deemusiq/components/fallbacks/error_box.dart';
+import 'package:deemusiq/components/inter_scrollbar/inter_scrollbar.dart';
+import 'package:deemusiq/modules/search/loading.dart';
+import 'package:deemusiq/pages/search/search.dart';
+import 'package:deemusiq/modules/search/sections/albums.dart';
+import 'package:deemusiq/modules/search/sections/artists.dart';
+import 'package:deemusiq/modules/search/sections/playlists.dart';
+import 'package:deemusiq/modules/search/sections/tracks.dart';
+import 'package:deemusiq/provider/metadata_plugin/search/all.dart';
 
 class SearchPageAllTab extends HookConsumerWidget {
   const SearchPageAllTab({super.key});

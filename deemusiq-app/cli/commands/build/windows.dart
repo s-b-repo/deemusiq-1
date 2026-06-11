@@ -73,7 +73,7 @@ class WindowsBuildCommand extends Command with BuildCommandCommonSteps {
       ),
     );
 
-    final exePath = join(cwd.path, "dist", "Spotube-windows-x86_64-setup.exe");
+    final exePath = join(cwd.path, "dist", "DeeMusiq-windows-x86_64-setup.exe");
 
     await ogExe.copy(exePath);
     await ogExe.delete();
@@ -108,7 +108,7 @@ class WindowsBuildCommand extends Command with BuildCommandCommonSteps {
     final distNupkgPath = join(
       cwd.path,
       "dist",
-      "Spotube-windows-x86_64.nupkg",
+      "DeeMusiq-windows-x86_64.nupkg",
     );
 
     await chocoNupkg.copy(distNupkgPath);

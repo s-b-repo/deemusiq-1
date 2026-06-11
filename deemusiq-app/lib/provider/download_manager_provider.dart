@@ -7,15 +7,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:metadata_god/metadata_god.dart';
 import 'package:path/path.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' hide join;
-import 'package:spotube/collections/routes.dart';
-import 'package:spotube/components/dialogs/replace_downloaded_dialog.dart';
-import 'package:spotube/extensions/dio.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/metadata_plugin/audio_source/quality_presets.dart';
-import 'package:spotube/provider/server/sourced_track_provider.dart';
-import 'package:spotube/provider/user_preferences/user_preferences_provider.dart';
-import 'package:spotube/services/logger/logger.dart';
-import 'package:spotube/utils/service_utils.dart';
+import 'package:deemusiq/collections/routes.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/components/dialogs/replace_downloaded_dialog.dart';
+import 'package:deemusiq/components/wallet/wallet_common.dart';
+import 'package:deemusiq/extensions/dio.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/metadata_plugin/audio_source/quality_presets.dart';
+import 'package:deemusiq/provider/server/sourced_track_provider.dart';
+import 'package:deemusiq/provider/user_preferences/user_preferences_provider.dart';
+import 'package:deemusiq/services/logger/logger.dart';
+import 'package:deemusiq/services/wallet/wallet_api.dart';
+import 'package:deemusiq/utils/service_utils.dart';
 
 enum DownloadStatus {
   queued,
@@ -26,7 +29,7 @@ enum DownloadStatus {
 }
 
 class DownloadTask {
-  final SpotubeFullTrackObject track;
+  final DeeMusiqFullTrackObject track;
   final DownloadStatus status;
   final CancelToken cancelToken;
   final int? totalSizeBytes;
@@ -45,7 +48,7 @@ class DownloadTask {
             downloadedBytesStreamController ?? StreamController.broadcast();
 
   DownloadTask copyWith({
-    SpotubeFullTrackObject? track,
+    DeeMusiqFullTrackObject? track,
     DownloadStatus? status,
     CancelToken? cancelToken,
     int? totalSizeBytes,
@@ -86,37 +89,71 @@ class DownloadManagerNotifier extends Notifier<List<DownloadTask>> {
     return state.firstWhereOrNull((element) => element.track.id == trackId);
   }
 
-  void addToQueue(SpotubeFullTrackObject track) {
+  void addToQueue(DeeMusiqFullTrackObject track) {
     if (state.any((element) => element.track.id == track.id)) return;
-    state = [
-      ...state,
-      DownloadTask(
-        track: track,
-        status: DownloadStatus.queued,
-        cancelToken: CancelToken(),
-      ),
-    ];
+    // Downloads are an online-only feature — they require the DeeMusiq backend
+    // (it authorises the catalog). When it can't be reached the app stays
+    // playable for already-downloaded songs, but no NEW downloads start.
+    _guardedEnqueue(() {
+      state = [
+        ...state,
+        DownloadTask(
+          track: track,
+          status: DownloadStatus.queued,
+          cancelToken: CancelToken(),
+        ),
+      ];
 
-    ref.read(sourcedTrackProvider(track));
+      ref.read(sourcedTrackProvider(track));
 
-    _startDownloading(); // No await should be invoked to avoid stuck UI
+      _startDownloading(); // No await should be invoked to avoid stuck UI
+    });
   }
 
-  void addAllToQueue(List<SpotubeFullTrackObject> tracks) {
-    state = [
-      ...state,
-      ...tracks.map((e) => DownloadTask(
-            track: e,
-            status: DownloadStatus.queued,
-            cancelToken: CancelToken(),
-          )),
-    ];
+  void addAllToQueue(List<DeeMusiqFullTrackObject> tracks) {
+    if (tracks.isEmpty) return;
+    _guardedEnqueue(() {
+      state = [
+        ...state,
+        ...tracks.map((e) => DownloadTask(
+              track: e,
+              status: DownloadStatus.queued,
+              cancelToken: CancelToken(),
+            )),
+      ];
 
-    ref.read(sourcedTrackProvider(tracks.first));
-    _startDownloading(); // No await should be invoked to avoid stuck UI
+      ref.read(sourcedTrackProvider(tracks.first));
+      _startDownloading(); // No await should be invoked to avoid stuck UI
+    });
   }
 
-  void retry(SpotubeFullTrackObject track) {
+  /// Runs [enqueue] only when the DeeMusiq backend is reachable; otherwise
+  /// notifies the user and does nothing (offline = no new downloads).
+  Future<void> _guardedEnqueue(void Function() enqueue) async {
+    final api = WalletApiClient.instance;
+    if (!api.isConfigured) {
+      _notifyDownloadBlocked(
+        "Downloads need the DeeMusiq backend. Add a backend in setup to download songs.",
+      );
+      return;
+    }
+    if (!await api.ping()) {
+      _notifyDownloadBlocked(
+        "Can't reach DeeMusiq right now — new downloads are paused. You can still play songs you've already downloaded.",
+      );
+      return;
+    }
+    enqueue();
+  }
+
+  void _notifyDownloadBlocked(String message) {
+    final context = rootNavigatorKey.currentContext;
+    if (context != null) {
+      showWalletToast(context, message, icon: DeeMusiqIcons.download);
+    }
+  }
+
+  void retry(DeeMusiqFullTrackObject track) {
     if (state.firstWhereOrNull((e) => e.track.id == track.id)?.status
         case DownloadStatus.canceled || DownloadStatus.failed) {
       _setStatus(track, DownloadStatus.queued);
@@ -124,7 +161,7 @@ class DownloadManagerNotifier extends Notifier<List<DownloadTask>> {
     }
   }
 
-  void cancel(SpotubeFullTrackObject track) {
+  void cancel(DeeMusiqFullTrackObject track) {
     if (state.firstWhereOrNull((e) => e.track.id == track.id)?.status ==
         DownloadStatus.failed) {
       return;
@@ -141,7 +178,7 @@ class DownloadManagerNotifier extends Notifier<List<DownloadTask>> {
     state = [];
   }
 
-  void _setStatus(SpotubeFullTrackObject track, DownloadStatus status) {
+  void _setStatus(DeeMusiqFullTrackObject track, DownloadStatus status) {
     state = state.map((e) {
       if (e.track.id == track.id) {
         if ((status == DownloadStatus.canceled) && e.cancelToken.isCancelled) {

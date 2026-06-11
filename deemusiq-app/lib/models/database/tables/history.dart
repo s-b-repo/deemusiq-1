@@ -16,16 +16,16 @@ class HistoryTable extends Table {
 }
 
 extension HistoryItemParseExtension on HistoryTableData {
-  SpotubeSimplePlaylistObject? get playlist =>
+  DeeMusiqSimplePlaylistObject? get playlist =>
       type == HistoryEntryType.playlist && !data.containsKey("external_urls")
-          ? SpotubeSimplePlaylistObject.fromJson(data)
+          ? DeeMusiqSimplePlaylistObject.fromJson(data)
           : null;
-  SpotubeSimpleAlbumObject? get album =>
+  DeeMusiqSimpleAlbumObject? get album =>
       type == HistoryEntryType.album && !data.containsKey("external_urls")
-          ? SpotubeSimpleAlbumObject.fromJson(data)
+          ? DeeMusiqSimpleAlbumObject.fromJson(data)
           : null;
-  SpotubeTrackObject? get track =>
+  DeeMusiqTrackObject? get track =>
       type == HistoryEntryType.track && !data.containsKey("external_urls")
-          ? SpotubeTrackObject.fromJson(data)
+          ? DeeMusiqTrackObject.fromJson(data)
           : null;
 }

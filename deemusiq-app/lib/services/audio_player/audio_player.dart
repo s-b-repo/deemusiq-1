@@ -1,43 +1,43 @@
 import 'dart:io';
 
 import 'package:media_kit/media_kit.dart' hide Track;
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/services/logger/logger.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/services/logger/logger.dart';
 import 'package:flutter/foundation.dart';
-import 'package:spotube/services/audio_player/custom_player.dart';
+import 'package:deemusiq/services/audio_player/custom_player.dart';
 import 'dart:async';
 
 import 'package:media_kit/media_kit.dart' as mk;
 
-import 'package:spotube/services/audio_player/playback_state.dart';
-import 'package:spotube/utils/platform.dart';
+import 'package:deemusiq/services/audio_player/playback_state.dart';
+import 'package:deemusiq/utils/platform.dart';
 
 part 'audio_players_streams_mixin.dart';
 part 'audio_player_impl.dart';
 
-class SpotubeMedia extends mk.Media {
+class DeeMusiqMedia extends mk.Media {
   static int serverPort = 0;
 
   static String get _host =>
       kIsWindows ? "localhost" : InternetAddress.anyIPv4.address;
 
-  final SpotubeTrackObject track;
-  SpotubeMedia(this.track)
+  final DeeMusiqTrackObject track;
+  DeeMusiqMedia(this.track)
       : assert(
-          track is SpotubeLocalTrackObject || track is SpotubeFullTrackObject,
+          track is DeeMusiqLocalTrackObject || track is DeeMusiqFullTrackObject,
           "Track must be a either a local track or a full track object with ISRC",
         ),
         // If the track is a local track, use its path, otherwise use the server URL
         super(
-          track is SpotubeLocalTrackObject
+          track is DeeMusiqLocalTrackObject
               ? track.path
               : "http://$_host:$serverPort/stream/${track.id}",
           extras: track.toJson(),
         );
 
-  factory SpotubeMedia.media(Media media) {
+  factory DeeMusiqMedia.media(Media media) {
     assert(media.extras != null, "[Media] must have extra metadata set");
-    return SpotubeMedia(SpotubeTrackObject.fromJson(media.extras!));
+    return DeeMusiqMedia(DeeMusiqTrackObject.fromJson(media.extras!));
   }
 }
 
@@ -47,7 +47,7 @@ abstract class AudioPlayerInterface {
   AudioPlayerInterface()
       : _mkPlayer = CustomPlayer(
           configuration: const mk.PlayerConfiguration(
-            title: "Spotube",
+            title: "DeeMusiq",
             logLevel: kDebugMode ? mk.MPVLogLevel.info : mk.MPVLogLevel.error,
             async: true,
           ),

@@ -2,13 +2,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-import 'package:spotube/collections/fake.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/components/image/universal_image.dart';
-import 'package:spotube/components/titlebar/titlebar.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/metadata_plugin/core/user.dart';
+import 'package:deemusiq/collections/fake.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/components/image/universal_image.dart';
+import 'package:deemusiq/components/titlebar/titlebar.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/metadata_plugin/core/user.dart';
+import 'package:deemusiq/provider/wallet/wallet_provider.dart';
+import 'package:deemusiq/components/wallet/wallet_common.dart';
+import 'package:deemusiq/collections/routes.gr.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -22,6 +25,10 @@ class ProfilePage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final me = ref.watch(metadataPluginUserProvider);
     final meData = me.asData?.value ?? FakeData.user;
+
+    final walletBalance = ref.watch(walletProvider.select((s) => s.balance));
+    final linkedCount =
+        ref.watch(walletProvider.select((s) => s.linkedAccounts.length));
 
     // final userProperties = useMemoized(
     //   () => {
@@ -82,7 +89,7 @@ class ProfilePage extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Button.text(
-                        leading: const Icon(SpotubeIcons.edit),
+                        leading: const Icon(DeeMusiqIcons.edit),
                         onPressed: () {
                           launchUrlString(
                             meData.externalUri,
@@ -131,7 +138,81 @@ class ProfilePage extends HookConsumerWidget {
               //     ),
               //   ),
               // ),
+              SliverCrossAxisConstrained(
+                maxCrossAxisExtent: 500,
+                child: SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8, vertical: 8),
+                    child: Column(
+                      children: [
+                        _ProfileNavCard(
+                          icon: DeeMusiqIcons.wallet,
+                          title: "Wallet",
+                          subtitle: "${formatTokens(walletBalance)} tokens",
+                          onPressed: () =>
+                              context.navigateTo(const WalletRoute()),
+                        ),
+                        const Gap(8),
+                        _ProfileNavCard(
+                          icon: DeeMusiqIcons.connect,
+                          title: "Linked accounts",
+                          subtitle: linkedCount == 0
+                              ? "Connect Spotify and more"
+                              : "$linkedCount connected",
+                          onPressed: () => context
+                              .navigateTo(const LinkedAccountsRoute()),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               const SliverGap(200),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ProfileNavCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final VoidCallback onPressed;
+
+  const _ProfileNavCard({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      padding: EdgeInsets.zero,
+      child: Button.ghost(
+        onPressed: onPressed,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              Icon(icon, color: deeMusiqOrange),
+              const Gap(12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(title).semiBold(),
+                    Text(subtitle).muted().xSmall(),
+                  ],
+                ),
+              ),
+              const Icon(DeeMusiqIcons.angleRight, size: 16),
             ],
           ),
         ),

@@ -3,18 +3,18 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
-import 'package:spotube/collections/routes.gr.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/models/database/database.dart';
-import 'package:spotube/modules/connect/connect_device.dart';
-import 'package:spotube/modules/home/sections/featured.dart';
-import 'package:spotube/modules/home/sections/sections.dart';
-import 'package:spotube/modules/home/sections/new_releases.dart';
-import 'package:spotube/modules/home/sections/recent.dart';
-import 'package:spotube/components/titlebar/titlebar.dart';
-import 'package:spotube/extensions/constrains.dart';
-import 'package:spotube/provider/user_preferences/user_preferences_provider.dart';
-import 'package:spotube/utils/platform.dart';
+import 'package:deemusiq/collections/routes.gr.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/models/database/database.dart';
+import 'package:deemusiq/modules/connect/connect_device.dart';
+import 'package:deemusiq/modules/home/sections/featured.dart';
+import 'package:deemusiq/modules/home/sections/sections.dart';
+import 'package:deemusiq/modules/home/sections/new_releases.dart';
+import 'package:deemusiq/modules/home/sections/recent.dart';
+import 'package:deemusiq/components/titlebar/titlebar.dart';
+import 'package:deemusiq/extensions/constrains.dart';
+import 'package:deemusiq/provider/user_preferences/user_preferences_provider.dart';
+import 'package:deemusiq/utils/platform.dart';
 
 @RoutePage()
 class HomePage extends HookConsumerWidget {
@@ -56,7 +56,7 @@ class HomePage extends HookConsumerWidget {
                     const ConnectDeviceButton(),
                     const Gap(10),
                     IconButton.ghost(
-                      icon: const Icon(SpotubeIcons.settings, size: 20),
+                      icon: const Icon(DeeMusiqIcons.settings, size: 20),
                       onPressed: () {
                         context.navigateTo(const SettingsRoute());
                       },

@@ -6,15 +6,15 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 import 'package:html/dom.dart' hide Text;
 import 'package:shadcn_flutter/shadcn_flutter.dart' hide Element;
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/pages/library/user_local_tracks/user_local_tracks.dart';
-import 'package:spotube/modules/root/update_dialog.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/pages/library/user_local_tracks/user_local_tracks.dart';
+import 'package:deemusiq/modules/root/update_dialog.dart';
 
-import 'package:spotube/provider/database/database.dart';
-import 'package:spotube/services/dio/dio.dart';
-import 'package:spotube/services/logger/logger.dart';
+import 'package:deemusiq/provider/database/database.dart';
+import 'package:deemusiq/services/dio/dio.dart';
+import 'package:deemusiq/services/logger/logger.dart';
 
-import 'package:spotube/utils/primitive_utils.dart';
+import 'package:deemusiq/utils/primitive_utils.dart';
 import 'package:collection/collection.dart';
 import 'package:html/parser.dart' as parser;
 
@@ -22,7 +22,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:spotube/collections/env.dart';
+import 'package:deemusiq/collections/env.dart';
 
 import 'package:version/version.dart';
 
@@ -187,7 +187,7 @@ abstract class ServiceUtils {
     return lyrics;
   }
 
-  static DateTime parseSpotifyAlbumDate(SpotubeFullAlbumObject? album) {
+  static DateTime parseSpotifyAlbumDate(DeeMusiqFullAlbumObject? album) {
     if (album == null) {
       return DateTime.parse("1975-01-01");
     }
@@ -195,7 +195,7 @@ abstract class ServiceUtils {
     return DateTime.parse(album.releaseDate);
   }
 
-  static List<T> sortTracks<T extends SpotubeTrackObject>(
+  static List<T> sortTracks<T extends DeeMusiqTrackObject>(
       List<T> tracks, SortBy sortBy) {
     if (sortBy == SortBy.none) return tracks;
     return List<T>.from(tracks)

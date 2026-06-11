@@ -1,14 +1,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/components/track_presentation/sort_tracks_dropdown.dart';
-import 'package:spotube/components/track_presentation/presentation_actions.dart';
-import 'package:spotube/components/track_presentation/presentation_props.dart';
-import 'package:spotube/components/track_presentation/presentation_state.dart';
-import 'package:spotube/extensions/constrains.dart';
-import 'package:spotube/extensions/context.dart';
-import 'package:spotube/hooks/controllers/use_shadcn_text_editing_controller.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/components/track_presentation/sort_tracks_dropdown.dart';
+import 'package:deemusiq/components/track_presentation/presentation_actions.dart';
+import 'package:deemusiq/components/track_presentation/presentation_props.dart';
+import 'package:deemusiq/components/track_presentation/presentation_state.dart';
+import 'package:deemusiq/extensions/constrains.dart';
+import 'package:deemusiq/extensions/context.dart';
+import 'package:deemusiq/hooks/controllers/use_shadcn_text_editing_controller.dart';
 
 class TrackPresentationModifiersSection extends HookConsumerWidget {
   final FocusNode? focusNode;
@@ -78,7 +78,7 @@ class TrackPresentationModifiersSection extends HookConsumerWidget {
                         features: [
                           InputFeature.leading(
                             Icon(
-                              SpotubeIcons.search,
+                              DeeMusiqIcons.search,
                               color: context.theme.colorScheme.mutedForeground,
                             ),
                           ),
@@ -99,7 +99,7 @@ class TrackPresentationModifiersSection extends HookConsumerWidget {
                                       scale: controller.text.isEmpty ? 0 : 1,
                                       child: IconButton.ghost(
                                         size: const ButtonSize(.6),
-                                        icon: const Icon(SpotubeIcons.close),
+                                        icon: const Icon(DeeMusiqIcons.close),
                                         onPressed: () {
                                           controller.clear();
                                           notifier.clearFilter();

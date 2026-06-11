@@ -1,10 +1,10 @@
 import 'package:bonsoir/bonsoir.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:spotube/provider/connect/clients.dart';
-import 'package:spotube/provider/server/server.dart';
-import 'package:spotube/provider/user_preferences/user_preferences_provider.dart';
-import 'package:spotube/services/device_info/device_info.dart';
-import 'package:spotube/utils/primitive_utils.dart';
+import 'package:deemusiq/provider/connect/clients.dart';
+import 'package:deemusiq/provider/server/server.dart';
+import 'package:deemusiq/provider/user_preferences/user_preferences_provider.dart';
+import 'package:deemusiq/services/device_info/device_info.dart';
+import 'package:deemusiq/utils/primitive_utils.dart';
 
 final bonsoirProvider = FutureProvider((ref) async {
   final enabled = ref.watch(

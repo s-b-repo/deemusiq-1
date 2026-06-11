@@ -9,9 +9,9 @@ import 'package:intl/intl.dart';
 import 'package:metadata_god/metadata_god.dart';
 import 'package:mime/mime.dart';
 import 'package:path/path.dart';
-import 'package:spotube/collections/assets.gen.dart';
-import 'package:spotube/services/audio_player/audio_player.dart';
-import 'package:spotube/utils/primitive_utils.dart';
+import 'package:deemusiq/collections/assets.gen.dart';
+import 'package:deemusiq/services/audio_player/audio_player.dart';
+import 'package:deemusiq/utils/primitive_utils.dart';
 
 part 'metadata.g.dart';
 part 'metadata.freezed.dart';

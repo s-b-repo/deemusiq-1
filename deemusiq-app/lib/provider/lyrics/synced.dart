@@ -5,16 +5,16 @@ import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lrc/lrc.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:spotube/models/database/database.dart';
-import 'package:spotube/models/lyrics.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/database/database.dart';
-import 'package:spotube/services/dio/dio.dart';
-import 'package:spotube/services/logger/logger.dart';
+import 'package:deemusiq/models/database/database.dart';
+import 'package:deemusiq/models/lyrics.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/database/database.dart';
+import 'package:deemusiq/services/dio/dio.dart';
+import 'package:deemusiq/services/logger/logger.dart';
 
 class SyncedLyricsNotifier
-    extends FamilyAsyncNotifier<SubtitleSimple, SpotubeTrackObject?> {
-  SpotubeTrackObject get _track => arg!;
+    extends FamilyAsyncNotifier<SubtitleSimple, DeeMusiqTrackObject?> {
+  DeeMusiqTrackObject get _track => arg!;
 
   /// Lyrics credits: [lrclib.net](https://lrclib.net) and their contributors
   /// Thanks for their generous public API
@@ -37,7 +37,7 @@ class SyncedLyricsNotifier
       options: Options(
         headers: {
           "User-Agent":
-              "Spotube v${packageInfo.version} (https://github.com/KRTirtho/spotube)"
+              "DeeMusiq v${packageInfo.version} (https://github.com/KRTirtho/spotube)"
         },
         responseType: ResponseType.json,
       ),
@@ -134,12 +134,12 @@ class SyncedLyricsNotifier
 final syncedLyricsDelayProvider = StateProvider<int>((ref) => 0);
 
 final syncedLyricsProvider = AsyncNotifierProviderFamily<SyncedLyricsNotifier,
-    SubtitleSimple, SpotubeTrackObject?>(
+    SubtitleSimple, DeeMusiqTrackObject?>(
   () => SyncedLyricsNotifier(),
 );
 
 final syncedLyricsMapProvider =
-    FutureProvider.family((ref, SpotubeTrackObject? track) async {
+    FutureProvider.family((ref, DeeMusiqTrackObject? track) async {
   final syncedLyrics = await ref.watch(syncedLyricsProvider(track).future);
 
   final isStaticLyrics =

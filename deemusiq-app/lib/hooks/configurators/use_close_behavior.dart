@@ -1,18 +1,18 @@
 import 'dart:io';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:spotube/hooks/configurators/use_window_listener.dart';
-import 'package:spotube/models/database/database.dart';
-import 'package:spotube/provider/user_preferences/user_preferences_provider.dart';
+import 'package:deemusiq/hooks/configurators/use_window_listener.dart';
+import 'package:deemusiq/models/database/database.dart';
+import 'package:deemusiq/provider/user_preferences/user_preferences_provider.dart';
 
 import 'package:local_notifier/local_notifier.dart';
-import 'package:spotube/utils/platform.dart';
+import 'package:deemusiq/utils/platform.dart';
 import 'package:window_manager/window_manager.dart';
 
 final closeNotification = !kIsDesktop
     ? null
     : (LocalNotification(
-        title: 'Spotube',
+        title: 'DeeMusiq',
         body: 'Running in background. Minimized to System Tray',
         actions: [
           LocalNotificationAction(text: 'Close The App'),

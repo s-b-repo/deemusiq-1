@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter_discord_rpc/flutter_discord_rpc.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/audio_player/audio_player.dart';
-import 'package:spotube/provider/user_preferences/user_preferences_provider.dart';
-import 'package:spotube/services/audio_player/audio_player.dart';
-import 'package:spotube/services/logger/logger.dart';
-import 'package:spotube/utils/platform.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/audio_player/audio_player.dart';
+import 'package:deemusiq/provider/user_preferences/user_preferences_provider.dart';
+import 'package:deemusiq/services/audio_player/audio_player.dart';
+import 'package:deemusiq/services/logger/logger.dart';
+import 'package:deemusiq/utils/platform.dart';
 
 class DiscordNotifier extends AsyncNotifier<void> {
   @override
@@ -73,7 +73,7 @@ class DiscordNotifier extends AsyncNotifier<void> {
     }
   }
 
-  Future<void> updatePresence(SpotubeTrackObject track) async {
+  Future<void> updatePresence(DeeMusiqTrackObject track) async {
     if (!kIsDesktop) return;
     if (FlutterDiscordRPC.instance.isConnected == false) return;
     final artistNames = track.artists.asString();
@@ -93,7 +93,7 @@ class DiscordNotifier extends AsyncNotifier<void> {
         ),
         buttons: [
           RPCButton(
-            label: "Listen on Spotube",
+            label: "Listen on DeeMusiq",
             url: track.externalUri,
           ),
         ],

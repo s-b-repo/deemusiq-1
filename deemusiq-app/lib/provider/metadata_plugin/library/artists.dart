@@ -1,12 +1,12 @@
 import 'package:riverpod/riverpod.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/metadata_plugin/core/auth.dart';
-import 'package:spotube/provider/metadata_plugin/utils/paginated.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/metadata_plugin/core/auth.dart';
+import 'package:deemusiq/provider/metadata_plugin/utils/paginated.dart';
 
 class MetadataPluginSavedArtistNotifier
-    extends PaginatedAsyncNotifier<SpotubeFullArtistObject> {
+    extends PaginatedAsyncNotifier<DeeMusiqFullArtistObject> {
   @override
-  Future<SpotubePaginationResponseObject<SpotubeFullArtistObject>> fetch(
+  Future<DeeMusiqPaginationResponseObject<DeeMusiqFullArtistObject>> fetch(
     int offset,
     int limit,
   ) async {
@@ -24,7 +24,7 @@ class MetadataPluginSavedArtistNotifier
     return await fetch(0, 20);
   }
 
-  Future<void> addFavorite(List<SpotubeFullArtistObject> artists) async {
+  Future<void> addFavorite(List<DeeMusiqFullArtistObject> artists) async {
     if (artists.isEmpty || state.value == null) return;
     final oldState = state.value;
 
@@ -46,7 +46,7 @@ class MetadataPluginSavedArtistNotifier
     }
   }
 
-  Future<void> removeFavorite(List<SpotubeFullArtistObject> artists) async {
+  Future<void> removeFavorite(List<DeeMusiqFullArtistObject> artists) async {
     if (artists.isEmpty || state.value == null) return;
 
     final oldState = state.value;
@@ -73,7 +73,7 @@ class MetadataPluginSavedArtistNotifier
 
 final metadataPluginSavedArtistsProvider = AsyncNotifierProvider<
     MetadataPluginSavedArtistNotifier,
-    SpotubePaginationResponseObject<SpotubeFullArtistObject>>(
+    DeeMusiqPaginationResponseObject<DeeMusiqFullArtistObject>>(
   () => MetadataPluginSavedArtistNotifier(),
 );
 

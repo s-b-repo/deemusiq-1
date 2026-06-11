@@ -1,5 +1,95 @@
 # Changelog
 
+> **DeeMusiq** is a rebrand of the open-source [Spotube](https://github.com/KRTirtho/spotube)
+> engine (BSD-4-Clause). DeeMusiq-specific changes are listed below; the upstream
+> **Spotube** release history (credited to Kingkor Roy Tirtho and contributors) is
+> preserved unchanged underneath, starting at `5.1.2`. See `NOTICE.md` for attribution.
+
+## DeeMusiq — app `5.1.2+45`
+
+### 2026-06-08 — New logo everywhere + backend-connected online mode
+
+- **New DeeMusiq logo across all platforms.** Regenerated every app icon / adaptive
+  icon / splash from the new 1024×1024 `logo.png` (Android main+nightly, iOS — no
+  alpha, macOS, web, Windows) plus the `deemusiq-logo*` branding sources.
+- **Backend-connected ("online") mode.** The app now points at a backend set at build
+  time (`--dart-define=DEEMUSIQ_BACKEND_URL=...`); `WalletApiClient.ping()` (`/health`)
+  is the online gate. The in-app About "Website" now links `deemusiq.github.io/deemusiq`.
+- **Quantum-resistant in-transit encryption.** New `lib/services/wallet/secure_channel.dart`
+  + a Dio interceptor seal every request/response body in an AES-256-GCM envelope using
+  a pre-shared 256-bit key (`--dart-define=DEEMUSIQ_CHANNEL_KEY=...`, matching the
+  backend's `SECURE_CHANNEL_KEY`) — safe even over plain `http://IP:port`. Reuses the
+  existing `encrypt` package (no new dependency).
+- **Downloads are online-only.** `download_manager_provider` blocks new downloads when
+  the backend is unreachable (clear toast) while already-downloaded songs still play;
+  online streaming via the YouTube engine is unaffected.
+- **Token top-ups are online-only.** Removed local/demo crediting from
+  `DeeMusiqPaymentService.purchase`; dropped `demoCredit` from the store's methods and
+  defaulted the purchase dialog to PayFast. The backend webhook is the only crediting
+  path; balance is derived from the server-synced ledger.
+- **Payments — South Africa only.** `regionTierProvider` locks to ZAR and the token
+  store shows an SA-only notice (mirrors backend `PAYMENTS_ZA_ONLY`).
+- **Deep links wired.** `use_deep_linking.dart` (was deprecated/empty) now handles
+  `deemusiq://payments` / `deemusiq://link` — refreshes wallet state and opens the
+  relevant screen. Android manifest scheme renamed `spotube` → `deemusiq`.
+
+### 2026-06-08 — Wallet backend + docs/CI consolidation
+
+- **DeeMusiq Wallet now has a real backend.** Added a deployable Node + TypeScript +
+  Express + Prisma server in `/backend` (authoritative token ledger, region pricing,
+  Stripe/PayFast card checkout, NOWPayments crypto deposits, Spotify account linking,
+  and a global most-pushed leaderboard). The app talks to it via
+  `lib/services/wallet/wallet_api.dart` only when `PaymentGatewayConfig.backendBaseUrl`
+  is set — otherwise it stays fully local and offline-demoable. See `DEEMUSIQ_WALLET.md`.
+- **Docs:** `DEEMUSIQ_WALLET.md` now documents the backend API contract; build/signing
+  steps live in `README.DEEMUSIQ.md`.
+
+### 2026-06-05 — Feature: DeeMusiq Wallet, tokens, "pay to push" & account linkage
+
+- **Token wallet** with a balance derived from an immutable on-device transaction
+  ledger (can't desync); new `Wallet` sidebar tile + Profile entry cards.
+- **"Pay to push" a song** from any track's ⋮ menu; pushes feed a Trending /
+  most-pushed leaderboard.
+- **Token store with regional pricing** authored in ZAR (SA-first) and localised per
+  region via purchasing-power tiers, with a region override picker.
+- **Payments** abstraction with PayFast/Stripe card rails and Monero / Ethereum /
+  Bitcoin / USDT crypto rails (a clearly-labelled demo top-up credits instantly so the
+  wallet works offline).
+- **Account linkage** ("Linked accounts") with Spotify first and slots for YouTube
+  Music / Apple Music / Deezer / TIDAL.
+- **Creators you support + earnings** view and a transaction activity feed.
+- Self-contained under `lib/{models,services,provider,pages,components}/wallet/`.
+
+### 2026-06-05 — Upstream sync (Spotube 5.1.1 → 5.1.2) + rebrand hardening
+
+- Ported the three upstream Spotube 5.1.2 bug fixes (NewPipe muxed-stream fallback,
+  search keyboard dismiss, null-safe custom-image helper) into the rebranded engine;
+  version bumped `5.1.1+44` → `5.1.2+45`.
+- Completed user-facing rebrand: media-playback notification channel, system-tray
+  background notification title, and the plugin file-picker label now read **DeeMusiq**
+  (were "Spotube").
+
+### 2026-06-04/05 — Initial DeeMusiq rebrand
+
+- Rebranded Spotube to **DeeMusiq** across all platforms: display name, Android
+  application id `za.co.deemusiq.app`, icon/splash, and default accent colour (orange
+  `#FF5722`). Internal package/namespace identifiers (`spotube`, `oss.krtirtho.spotube`)
+  were intentionally left unchanged so the app keeps building.
+- Replaced the upstream release CI with `deemusiq-android.yml` (builds the Android APK).
+- Attribution to upstream Spotube retained in `NOTICE.md` and `LICENSE` (BSD-4-Clause).
+
+---
+
+<!-- Upstream Spotube release history (unchanged) — credit: Kingkor Roy Tirtho & contributors. -->
+
+## [5.1.2](https://github.com/KRTirtho/spotube/compare/v5.1.1...v5.1.2) (2026-06-05)
+
+### Bug Fixes
+
+- **NewPipe**: Fallback to muxed streams if no audio-only stream is available
+- Search dropdown and keyboard dismiss upon submission
+- Custom image helper null exception handling
+
 ## [5.1.1](https://github.com/KRTirtho/spotube/compare/v5.1.0...v5.1.1) (2026-02-24)
 
 ### Bug Fixes

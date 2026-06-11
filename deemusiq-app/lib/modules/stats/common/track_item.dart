@@ -1,13 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
-import 'package:spotube/collections/routes.gr.dart';
-import 'package:spotube/components/image/universal_image.dart';
-import 'package:spotube/components/links/artist_link.dart';
-import 'package:spotube/components/ui/button_tile.dart';
-import 'package:spotube/models/metadata/metadata.dart';
+import 'package:deemusiq/collections/routes.gr.dart';
+import 'package:deemusiq/components/image/universal_image.dart';
+import 'package:deemusiq/components/links/artist_link.dart';
+import 'package:deemusiq/components/ui/button_tile.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
 
 class StatsTrackItem extends StatelessWidget {
-  final SpotubeTrackObject track;
+  final DeeMusiqTrackObject track;
   final Widget info;
   const StatsTrackItem({
     super.key,

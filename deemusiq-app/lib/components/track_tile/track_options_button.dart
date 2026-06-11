@@ -3,16 +3,16 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
-import 'package:spotube/collections/routes.gr.dart';
-import 'package:spotube/collections/spotube_icons.dart';
-import 'package:spotube/components/image/universal_image.dart';
-import 'package:spotube/components/links/artist_link.dart';
-import 'package:spotube/components/track_tile/track_options.dart';
-import 'package:spotube/extensions/constrains.dart';
-import 'package:spotube/models/metadata/metadata.dart';
+import 'package:deemusiq/collections/routes.gr.dart';
+import 'package:deemusiq/collections/deemusiq_icons.dart';
+import 'package:deemusiq/components/image/universal_image.dart';
+import 'package:deemusiq/components/links/artist_link.dart';
+import 'package:deemusiq/components/track_tile/track_options.dart';
+import 'package:deemusiq/extensions/constrains.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
 
 class TrackOptionsButton extends HookConsumerWidget {
-  final SpotubeTrackObject track;
+  final DeeMusiqTrackObject track;
   final bool userPlaylist;
   final String? playlistId;
   const TrackOptionsButton({
@@ -25,7 +25,7 @@ class TrackOptionsButton extends HookConsumerWidget {
   static OverlayCompleter<dynamic> showOptions(
     BuildContext context,
     Offset offset,
-    SpotubeTrackObject track, {
+    DeeMusiqTrackObject track, {
     bool userPlaylist = false,
     String? playlistId,
   }) {
@@ -62,7 +62,7 @@ class TrackOptionsButton extends HookConsumerWidget {
     );
 
     return IconButton.ghost(
-      icon: const Icon(SpotubeIcons.moreHorizontal),
+      icon: const Icon(DeeMusiqIcons.moreHorizontal),
       onPressed: () {
         final mediaQuery = MediaQuery.sizeOf(context);
 

@@ -2,16 +2,16 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:spotube/models/metadata/metadata.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
 // ignore: implementation_imports
 import 'package:riverpod/src/async_notifier.dart';
-import 'package:spotube/provider/metadata_plugin/utils/common.dart';
-import 'package:spotube/services/logger/logger.dart';
+import 'package:deemusiq/provider/metadata_plugin/utils/common.dart';
+import 'package:deemusiq/services/logger/logger.dart';
 
 mixin PaginatedAsyncNotifierMixin<K>
     // ignore: invalid_use_of_internal_member
-    on AsyncNotifierBase<SpotubePaginationResponseObject<K>> {
-  Future<SpotubePaginationResponseObject<K>> fetch(int offset, int limit);
+    on AsyncNotifierBase<DeeMusiqPaginationResponseObject<K>> {
+  Future<DeeMusiqPaginationResponseObject<K>> fetch(int offset, int limit);
 
   Future<void> fetchMore() async {
     if (state.value == null || !state.value!.hasMore) return;
@@ -75,9 +75,9 @@ mixin PaginatedAsyncNotifierMixin<K>
 }
 
 abstract class PaginatedAsyncNotifier<K>
-    extends AsyncNotifier<SpotubePaginationResponseObject<K>>
+    extends AsyncNotifier<DeeMusiqPaginationResponseObject<K>>
     with PaginatedAsyncNotifierMixin<K>, MetadataPluginMixin<K> {}
 
 abstract class AutoDisposePaginatedAsyncNotifier<K>
-    extends AutoDisposeAsyncNotifier<SpotubePaginationResponseObject<K>>
+    extends AutoDisposeAsyncNotifier<DeeMusiqPaginationResponseObject<K>>
     with PaginatedAsyncNotifierMixin<K>, MetadataPluginMixin<K> {}

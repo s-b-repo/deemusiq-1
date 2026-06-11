@@ -1,15 +1,15 @@
 import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:spotube/models/database/database.dart';
-import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/provider/database/database.dart';
-import 'package:spotube/provider/history/top.dart';
-import 'package:spotube/provider/metadata_plugin/artist/artist.dart';
-import 'package:spotube/provider/metadata_plugin/utils/family_paginated.dart';
+import 'package:deemusiq/models/database/database.dart';
+import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/provider/database/database.dart';
+import 'package:deemusiq/provider/history/top.dart';
+import 'package:deemusiq/provider/metadata_plugin/artist/artist.dart';
+import 'package:deemusiq/provider/metadata_plugin/utils/family_paginated.dart';
 
-typedef PlaybackHistoryTrack = ({int count, SpotubeTrackObject track});
-typedef PlaybackHistoryArtist = ({int count, SpotubeSimpleArtistObject artist});
+typedef PlaybackHistoryTrack = ({int count, DeeMusiqTrackObject track});
+typedef PlaybackHistoryArtist = ({int count, DeeMusiqSimpleArtistObject artist});
 
 class HistoryTopTracksNotifier extends FamilyPaginatedAsyncNotifier<
     PlaybackHistoryTrack, HistoryDuration> {
@@ -109,7 +109,7 @@ class HistoryTopTracksNotifier extends FamilyPaginatedAsyncNotifier<
 
     final items = getTracksWithCount(entries);
 
-    return SpotubePaginationResponseObject<PlaybackHistoryTrack>(
+    return DeeMusiqPaginationResponseObject<PlaybackHistoryTrack>(
       items: items,
       nextOffset: offset + limit,
       total: items.length,
@@ -142,7 +142,7 @@ class HistoryTopTracksNotifier extends FamilyPaginatedAsyncNotifier<
   }
 
   List<PlaybackHistoryArtist> getArtistsWithCount(
-    Iterable<SpotubeSimpleArtistObject> artists,
+    Iterable<DeeMusiqSimpleArtistObject> artists,
   ) {
     return groupBy(artists, (artist) => artist.id)
         .entries
@@ -190,7 +190,7 @@ class HistoryTopTracksNotifier extends FamilyPaginatedAsyncNotifier<
 
 final historyTopTracksProvider = AsyncNotifierProviderFamily<
     HistoryTopTracksNotifier,
-    SpotubePaginationResponseObject<PlaybackHistoryTrack>,
+    DeeMusiqPaginationResponseObject<PlaybackHistoryTrack>,
     HistoryDuration>(
   () => HistoryTopTracksNotifier(),
 );

@@ -2,9 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:spotube/collections/routes.gr.dart';
-import 'package:spotube/provider/metadata_plugin/core/auth.dart';
-import 'package:spotube/services/kv_store/kv_store.dart';
+import 'package:deemusiq/collections/routes.gr.dart';
+import 'package:deemusiq/provider/metadata_plugin/core/auth.dart';
+import 'package:deemusiq/services/kv_store/kv_store.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -106,7 +106,7 @@ class AppRouter extends RootStackRouter {
               ),
             AutoRoute(
               path: "settings/about",
-              page: AboutSpotubeRoute.page,
+              page: AboutDeeMusiqRoute.page,
             ),
             AutoRoute(
               path: "settings/scrobbling",
@@ -156,6 +156,34 @@ class AppRouter extends RootStackRouter {
             AutoRoute(
               path: "profile",
               page: ProfileRoute.page,
+            ),
+            AutoRoute(
+              path: "wallet",
+              page: WalletRoute.page,
+            ),
+            AutoRoute(
+              path: "wallet/store",
+              page: TokenStoreRoute.page,
+            ),
+            AutoRoute(
+              path: "wallet/linked",
+              page: LinkedAccountsRoute.page,
+            ),
+            AutoRoute(
+              path: "account",
+              page: AccountRoute.page,
+            ),
+            AutoRoute(
+              path: "catalog",
+              page: CatalogRoute.page,
+            ),
+            AutoRoute(
+              path: "wallet/creators",
+              page: CreatorsSupportedRoute.page,
+            ),
+            AutoRoute(
+              path: "wallet/trending",
+              page: PushLeaderboardRoute.page,
             ),
             AutoRoute(
               path: "stats",

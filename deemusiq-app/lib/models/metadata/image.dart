@@ -1,15 +1,15 @@
 part of 'metadata.dart';
 
 @freezed
-class SpotubeImageObject with _$SpotubeImageObject {
-  factory SpotubeImageObject({
+class DeeMusiqImageObject with _$DeeMusiqImageObject {
+  factory DeeMusiqImageObject({
     required String url,
     int? width,
     int? height,
-  }) = _SpotubeImageObject;
+  }) = _DeeMusiqImageObject;
 
-  factory SpotubeImageObject.fromJson(Map<String, dynamic> json) =>
-      _$SpotubeImageObjectFromJson(json);
+  factory DeeMusiqImageObject.fromJson(Map<String, dynamic> json) =>
+      _$DeeMusiqImageObjectFromJson(json);
 }
 
 enum ImagePlaceholder {
@@ -27,13 +27,14 @@ final placeholderUrlMap = {
       "https://avatars.dicebear.com/api/bottts/${PrimitiveUtils.uuid.v4()}.png",
 };
 
-extension SpotubeImageExtensions on List<SpotubeImageObject>? {
+extension DeeMusiqImageExtensions on List<DeeMusiqImageObject>? {
   /// Returns the URL of the image at the specified index.
   String asUrlString({
     int index = 1,
     required ImagePlaceholder placeholder,
   }) {
-    final sortedImage = this?.sorted((a, b) => a.width!.compareTo(b.width!));
+    final sortedImage =
+        this?.sorted((a, b) => (a.width ?? 0).compareTo(b.width ?? 0));
 
     return sortedImage != null && sortedImage.isNotEmpty
         ? sortedImage[

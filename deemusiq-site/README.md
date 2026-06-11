@@ -53,7 +53,7 @@ git push -u origin main
 
 | What | Where | Current value |
 |------|-------|---------------|
-| Contact email | `index.html` (mailto link) **and** `js/main.js` (`CONTACT_EMAIL`) | `getdeemusiq@gmail.com` ✅ from client docs |
+| Contact email | `index.html` (mailto link) **and** `js/main.js` (`CONTACT_EMAIL`) | `deemusiq@protonmail.com` ✅ from client docs |
 | Phone / WhatsApp | `index.html` → search `+27 73 725 3454` | `+27 73 725 3454` ✅ from client docs |
 | Social links | `index.html` → `contact__socials` (the `href="#"`) | `#` — add your real handles |
 | Download links | `js/main.js` → the `DOWNLOADS` object | empty (routes to contact) |
