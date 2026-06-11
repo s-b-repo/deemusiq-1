@@ -1,30 +1,36 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+// Dependency-light smoke test: exercises the wallet display helpers inside a
+// minimal widget tree (no platform channels, no app bootstrap).
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:deemusiq/collections/deemusiq_icons.dart';
-
-import 'package:deemusiq/main.dart';
+import 'package:deemusiq/components/wallet/wallet_common.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const DeeMusiq());
+  testWidgets("renders a formatted token balance in a plain widget tree",
+      (tester) async {
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: Text("Balance: ${formatTokens(1234567)} tokens"),
+      ),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text("Balance: 1,234,567 tokens"), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(DeeMusiqIcons.add));
-    await tester.pump();
+  test("formatTokens groups thousands and keeps the sign", () {
+    expect(formatTokens(0), "0");
+    expect(formatTokens(999), "999");
+    expect(formatTokens(1000), "1,000");
+    expect(formatTokens(25000), "25,000");
+    expect(formatTokens(-1234), "-1,234");
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  test("relativeTime buckets recent moments sensibly", () {
+    final now = DateTime.now();
+    expect(relativeTime(now), "just now");
+    expect(relativeTime(now.subtract(const Duration(minutes: 5))), "5m ago");
+    expect(relativeTime(now.subtract(const Duration(hours: 3))), "3h ago");
+    expect(relativeTime(now.subtract(const Duration(days: 3))), "3d ago");
   });
 }
