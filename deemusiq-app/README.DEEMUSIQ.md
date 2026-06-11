@@ -132,3 +132,13 @@ start from `dart cli/cli.dart build <platform>`. Ask and I can add a desktop wor
   audio). It does **not** host your own artists' uploads — that's the separate “real
   DeeMusiq platform” we discussed. This rebrand is exactly what you asked for: *Spotube,
   renamed to DeeMusiq.*
+
+## Known TODO: drift DB migration tests
+
+Upstream's `test/drift/` migration suite was removed: its drift-generated
+`schema_v*.dart` step files were stale against the current database schema and
+no longer compiled (broken at rest, first caught when CI gained a test gate).
+The app's real migrations still run (drift step-by-step migrations in
+`lib/models/database/`). To restore the suite, regenerate the steps with
+`dart run drift_dev make-migrations` on a machine with the Flutter toolchain,
+then re-add the tests.
