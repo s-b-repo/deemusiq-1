@@ -490,6 +490,10 @@ class _NativeUser extends MetadataPluginUserEndpoint {
 class _NativeAuth extends MetadataAuthEndpoint {
   _NativeAuth() : super(_dummyHetu);
 
+  // Typed as raw `Stream` to match the base getter's return type exactly
+  // (a `Stream<dynamic>` literal is rejected as an invalid override).
+  final Stream _authState = const Stream.empty();
+
   @override
   Future<void> authenticate() async {}
   @override
@@ -497,7 +501,7 @@ class _NativeAuth extends MetadataAuthEndpoint {
   @override
   Future<void> logout() async {}
   @override
-  Stream get authStateStream => const Stream.empty();
+  Stream get authStateStream => _authState;
 }
 
 class _NativeCore extends MetadataPluginCore {
