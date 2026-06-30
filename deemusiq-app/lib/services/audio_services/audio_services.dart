@@ -29,9 +29,9 @@ class AudioServices with WidgetsBindingObserver {
                 kIsLinux,
                 Env.releaseChannel
               )) {
-                (true, _) => "spotube",
-                (_, ReleaseChannel.stable) => "oss.krtirtho.spotube",
-                (_, ReleaseChannel.nightly) => "oss.krtirtho.spotube.nightly",
+                (true, _) => "deemusiq",
+                (_, ReleaseChannel.stable) => "za.co.deemusiq.app",
+                (_, ReleaseChannel.nightly) => "za.co.deemusiq.app.nightly",
               },
               androidNotificationChannelName: 'DeeMusiq',
               androidNotificationOngoing: false,

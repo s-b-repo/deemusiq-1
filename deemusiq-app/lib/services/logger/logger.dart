@@ -101,10 +101,10 @@ class AppLogger {
     }
 
     if (kIsLinux) {
-      dir = join(_getXdgStateHome(), "spotube");
+      dir = join(_getXdgStateHome(), "deemusiq");
     }
 
-    final file = File(join(dir, ".spotube_logs"));
+    final file = File(join(dir, ".deemusiq_logs"));
     if (!await file.exists()) {
       await file.create(recursive: true);
     }

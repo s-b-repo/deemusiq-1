@@ -86,9 +86,9 @@ class DiscordNotifier extends AsyncNotifier<void> {
         state: artistNames,
         assets: RPCAssets(
           largeImage:
-              track.album.images.firstOrNull?.url ?? "spotube-logo-foreground",
+              track.album.images.firstOrNull?.url ?? "deemusiq-logo-foreground",
           largeText: track.album.name,
-          smallImage: "spotube-logo-foreground",
+          smallImage: "deemusiq-logo-foreground",
           smallText: "DeeMusiq",
         ),
         buttons: [

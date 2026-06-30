@@ -67,7 +67,7 @@ class SettingsAboutSection extends HookConsumerWidget {
               ),
               onPressed: () {
                 launchUrlString(
-                  "https://opencollective.com/spotube",
+                  "https://opencollective.com/deemusiq",
                   mode: LaunchMode.externalApplication,
                 );
               },

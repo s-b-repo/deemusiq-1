@@ -87,9 +87,23 @@ android {
         }
     }
 
-    flavorDimensions "default"
+    flavorDimensions "default", "store"
 
     productFlavors {
+        // ── Distribution channel ─────────────────────────────────────────
+        playstore {
+            dimension "store"
+            // Google Play Services (integrity, billing, etc.)
+            resValue "string", "store_name", "Play Store"
+        }
+        fdroid {
+            dimension "store"
+            // No Google Play Services — fully FOSS build
+            applicationIdSuffix ".fdroid"
+            resValue "string", "store_name", "F-Droid"
+        }
+
+        // ── Release track ────────────────────────────────────────────────
         nightly {
             dimension "default"
             resValue "string", "app_name_en", "DeeMusiq Nightly"
@@ -108,6 +122,13 @@ android {
             dimension "default"
             resValue "string", "app_name_en", "DeeMusiq"
             signingConfig signingConfigs.release
+        }
+    }
+
+    // Remove applicationIdSuffix for stable+playstore combo (the canonical build)
+    androidComponents {
+        onVariants(selector().withFlavor("store" to "playstore", "default" to "stable")) { variant ->
+            variant.applicationId = "za.co.deemusiq.app"
         }
     }
 

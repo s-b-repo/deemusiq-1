@@ -103,7 +103,7 @@ final localTracksProvider =
             final imageFile = File(
               join(
                 (await getTemporaryDirectory()).path,
-                "spotube",
+                "deemusiq",
                 ServiceUtils.sanitizeFilename(
                         basenameWithoutExtension(file.path)) +
                     imgMimeToExt[metadata.picture?.mimeType ?? "image/jpeg"]!,
