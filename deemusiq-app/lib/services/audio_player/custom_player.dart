@@ -155,4 +155,55 @@ class CustomPlayer extends Player {
       sizeInBytes.toString(),
     );
   }
+
+  // ── Spotify-style crossfade ──────────────────────────────────────────────
+
+  /// Sets the crossfade duration between tracks. 0 = off (default).
+  /// mpv handles this via `audio-fade-in` on the next track — gapless
+  /// playback is always enabled (mpv default).
+  Future<void> setCrossfade(Duration duration) async {
+    if (duration.inSeconds <= 0) {
+      await nativePlayer.setProperty('audio-fade-in', '0');
+    } else {
+      await nativePlayer.setProperty(
+        'audio-fade-in',
+        duration.inSeconds.toString(),
+      );
+    }
+  }
+
+  /// Enables gapless playback (mpv default, no gaps between tracks).
+  /// Explicitly sets the relevant mpv properties.
+  Future<void> setGaplessPlayback(bool enabled) async {
+    await nativePlayer.setProperty('gapless-audio', enabled ? 'yes' : 'no');
+    // Prefetch the next track's audio data for seamless transitions.
+    await nativePlayer.setProperty('prefetch-playlist', enabled ? 'yes' : 'no');
+  }
+
+  /// Sets audio replaygain mode. 'track' = per-track, 'album' = per-album,
+  /// 'off' = disabled. Matches Spotify's volume normalization.
+  Future<void> setReplayGain(String mode) async {
+    switch (mode) {
+      case 'track':
+        await nativePlayer.setProperty('replaygain', 'track');
+        break;
+      case 'album':
+        await nativePlayer.setProperty('replaygain', 'album');
+        break;
+      default:
+        await nativePlayer.setProperty('replaygain', 'no');
+    }
+  }
+
+  /// Seeks to the previous track. Wraps around if loop mode is on and we're
+  /// at the start of the playlist.
+  Future<void> previous() async {
+    // If we're more than 3 seconds into the current track, restart it.
+    // Otherwise, go to the previous track (Spotify behaviour).
+    if (state.position.inSeconds > 3) {
+      await seek(const Duration(seconds: 0));
+    } else {
+      await super.previous();
+    }
+  }
 }

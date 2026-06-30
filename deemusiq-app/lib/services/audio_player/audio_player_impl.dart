@@ -135,4 +135,25 @@ class DeeMusiqAudioPlayer extends AudioPlayerInterface
   Future<void> setDemuxerBufferSize(int sizeInBytes) async {
     await _mkPlayer.setDemuxerBufferSize(sizeInBytes);
   }
+
+  // ── Crossfade & gapless (Spotify-style) ─────────────────────────────────
+
+  Future<void> setCrossfade(Duration duration) async {
+    await _mkPlayer.setCrossfade(duration);
+  }
+
+  Future<void> setGaplessPlayback(bool enabled) async {
+    await _mkPlayer.setGaplessPlayback(enabled);
+  }
+
+  Future<void> setReplayGain(String mode) async {
+    await _mkPlayer.setReplayGain(mode);
+  }
+
+  // ── Equalizer ───────────────────────────────────────────────────────────
+
+  /// Attaches the equalizer to this player's native mpv backend.
+  void attachEqualizer(AudioEqualizer eq) {
+    eq.attach(_mkPlayer.nativePlayer);
+  }
 }

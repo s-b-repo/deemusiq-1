@@ -5,6 +5,7 @@ import 'package:deemusiq/models/metadata/metadata.dart';
 import 'package:deemusiq/services/logger/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:deemusiq/services/audio_player/custom_player.dart';
+import 'package:deemusiq/services/audio_player/audio_equalizer.dart';
 import 'dart:async';
 
 import 'package:media_kit/media_kit.dart' as mk;
