@@ -21,112 +21,113 @@ export const routes: Record<string, [string, IconType | null]> = {
 };
 
 const releasesUrl =
-  "https://github.com/KRTirtho/Spotube/releases/latest/download";
+  "https://github.com/deemusiq/deemusiq/releases/latest/download";
 
 export const downloadLinks: Record<string, [string, IconType[]]> = {
-  "Android Apk": [`${releasesUrl}/Spotube-android-all-arch.apk`, [FaAndroid]],
+  "Android Apk": [`${releasesUrl}/DeeMusiq.apk`, [FaAndroid]],
   "Windows Executable": [
-    `${releasesUrl}/Spotube-windows-x86_64-setup.exe`,
+    `${releasesUrl}/DeeMusiq-windows-x86_64-setup.exe`,
     [FaWindows],
   ],
-  "macOS Dmg": [`${releasesUrl}/Spotube-macos-universal.dmg`, [FaApple]],
+  "macOS Dmg": [`${releasesUrl}/DeeMusiq-macos-universal.dmg`, [FaApple]],
   "Ubuntu, Debian": [
-    `${releasesUrl}/Spotube-linux-x86_64.deb`,
+    `${releasesUrl}/DeeMusiq-linux-x86_64.deb`,
     [FaUbuntu, FaDebian],
   ],
   "Fedora, Redhat, Opensuse": [
-    `${releasesUrl}/Spotube-linux-x86_64.rpm`,
+    `${releasesUrl}/DeeMusiq-linux-x86_64.rpm`,
     [FaFedora, FaRedhat, FaOpensuse],
   ],
-  "iPhone Ipa": [`${releasesUrl}/Spotube-iOS.ipa`, [FaApple]],
+  "iPhone Ipa": [`${releasesUrl}/DeeMusiq-iOS.ipa`, [FaApple]],
 };
 
 export const extendedDownloadLinks: Record<
   string,
   [string, IconType[], string]
 > = {
-  Android: [`${releasesUrl}/Spotube-android-all-arch.apk`, [FaAndroid], "apk"],
+  Android: [`${releasesUrl}/DeeMusiq.apk`, [FaAndroid], "apk"],
   Windows: [
-    `${releasesUrl}/Spotube-windows-x86_64-setup.exe`,
+    `${releasesUrl}/DeeMusiq-windows-x86_64-setup.exe`,
     [FaWindows],
     "exe",
   ],
-  macOS: [`${releasesUrl}/Spotube-macos-universal.dmg`, [FaApple], "dmg"],
+  macOS: [`${releasesUrl}/DeeMusiq-macos-universal.dmg`, [FaApple], "dmg"],
   "Ubuntu, Debian (x64)": [
-    `${releasesUrl}/Spotube-linux-x86_64.deb`,
+    `${releasesUrl}/DeeMusiq-linux-x86_64.deb`,
     [FaUbuntu, FaDebian],
     "deb",
   ],
   "Ubuntu, Debian (arm64)": [
-    `${releasesUrl}/Spotube-linux-aarch64.deb`,
+    `${releasesUrl}/DeeMusiq-linux-aarch64.deb`,
     [FaUbuntu, FaDebian],
     "deb",
   ],
   "Fedora, Redhat, Opensuse": [
-    `${releasesUrl}/Spotube-linux-x86_64.rpm`,
+    `${releasesUrl}/DeeMusiq-linux-x86_64.rpm`,
     [FaFedora, FaRedhat, FaOpensuse],
     "rpm",
   ],
   "Linux AppImage (x64)": [
-    `${releasesUrl}/Spotube-linux-x86_64.AppImage`,
+    `${releasesUrl}/DeeMusiq-linux-x86_64.AppImage`,
     [FaLinux],
     "AppImage",
   ],
   "Linux AppImage (arm64)": [
-    `${releasesUrl}/Spotube-linux-aarch64.AppImage`,
+    `${releasesUrl}/DeeMusiq-linux-aarch64.AppImage`,
     [FaLinux],
     "AppImage",
   ],
-  iPhone: [`${releasesUrl}/Spotube-iOS.ipa`, [FaApple], "ipa"],
+  iPhone: [`${releasesUrl}/DeeMusiq-iOS.ipa`, [FaApple], "ipa"],
 };
 
 const nightlyReleaseUrl =
-  "https://github.com/KRTirtho/Spotube/releases/download/nightly";
+  "https://github.com/deemusiq/deemusiq/releases/download/nightly";
 
 export const extendedNightlyDownloadLinks: Record<
   string,
   [string, IconType[], string]
 > = {
-  Android: [`${releasesUrl}/Spotube-android-all-arch.apk`, [FaAndroid], "apk"],
+  Android: [`${nightlyReleaseUrl}/DeeMusiq.apk`, [FaAndroid], "apk"],
   Windows: [
-    `${releasesUrl}/Spotube-windows-x86_64-setup.exe`,
+    `${nightlyReleaseUrl}/DeeMusiq-windows-x86_64-setup.exe`,
     [FaWindows],
     "exe",
   ],
-  macOS: [`${releasesUrl}/Spotube-macos-universal.dmg`, [FaApple], "dmg"],
+  macOS: [`${nightlyReleaseUrl}/DeeMusiq-macos-universal.dmg`, [FaApple], "dmg"],
   "Ubuntu, Debian (x64)": [
-    `${releasesUrl}/Spotube-linux-x86_64.deb`,
+    `${nightlyReleaseUrl}/DeeMusiq-linux-x86_64.deb`,
     [FaUbuntu, FaDebian],
     "deb",
   ],
   "Ubuntu, Debian (arm64)": [
-    `${releasesUrl}/Spotube-linux-aarch64.deb`,
+    `${nightlyReleaseUrl}/DeeMusiq-linux-aarch64.deb`,
     [FaUbuntu, FaDebian],
     "deb",
   ],
   "Fedora, Redhat, Opensuse": [
-    `${releasesUrl}/Spotube-linux-x86_64.rpm`,
+    `${nightlyReleaseUrl}/DeeMusiq-linux-x86_64.rpm`,
     [FaFedora, FaRedhat, FaOpensuse],
     "rpm",
   ],
   "Linux AppImage (x64)": [
-    `${releasesUrl}/Spotube-linux-x86_64.AppImage`,
+    `${nightlyReleaseUrl}/DeeMusiq-linux-x86_64.AppImage`,
     [FaLinux],
     "AppImage",
   ],
   "Linux AppImage (arm64)": [
-    `${releasesUrl}/Spotube-linux-aarch64.AppImage`,
+    `${nightlyReleaseUrl}/DeeMusiq-linux-aarch64.AppImage`,
     [FaLinux],
     "AppImage",
   ],
-  iPhone: [`${releasesUrl}/Spotube-iOS.ipa`, [FaApple], "ipa"],
+  iPhone: [`${nightlyReleaseUrl}/DeeMusiq-iOS.ipa`, [FaApple], "ipa"],
 };
 
+// Ad slots — replace with DeeMusiq's own AdSense/ad-network IDs when
+// monetisation partners are onboarded. Currently inactive placeholders.
 export const ADS_SLOTS = Object.freeze({
-  rootPageDisplay: 5979549631,
-  blogPageInFeed: 3386010031,
-  downloadPageDisplay: 9928443050,
-  packagePageArticle: 9119323068,
-  // This is being used for rehype-auto-ads in svelte.config.js
-  blogArticlePageArticle: 6788673194,
+  rootPageDisplay: 0,
+  blogPageInFeed: 0,
+  downloadPageDisplay: 0,
+  packagePageArticle: 0,
+  blogArticlePageArticle: 0,
 });

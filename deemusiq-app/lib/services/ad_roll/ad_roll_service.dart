@@ -1,179 +1,153 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:deemusiq/services/audio_player/audio_player.dart';
 import 'package:deemusiq/services/logger/logger.dart';
 import 'package:deemusiq/services/kv_store/kv_store.dart';
+import 'package:deemusiq/services/wallet/wallet_api.dart';
+import 'package:deemusiq/services/wallet/payment_service.dart' show PaymentGatewayConfig;
+import 'package:deemusiq/services/youtube_engine/youtube_engine.dart';
 
-/// Controls when and how ads/promos are injected into the playback queue.
+/// Controls when ads are injected into the playback queue. Fetches ad
+/// inventory from the DeeMusiq backend (GET /ads/next) — all ads are YouTube
+/// videos whose audio is extracted via the app's YouTube engine.
 ///
-/// ## Behaviour
-/// - After every [songsBetweenAds] (default 6) completed songs, an ad is
-///   queued to play BEFORE the next track.
-/// - Ads are short DeeMusiq promo audio clips. They are skippable (the user
-///   can tap next/skip at any time).
-/// - Ad impressions are tracked so the same ad isn't repeated back-to-back.
-/// - When no backend ad network is configured, built-in DeeMusiq promos play
-///   instead — keeping the monetisation seam ready for future partners.
+/// ## Flow
+/// 1. After every [songsBetweenAds] (default 6) completed songs, the app
+///    calls `GET /ads/next` with an `exclude` list of ad IDs already heard
+///    this session.
+/// 2. The backend returns an ad with a YouTube video ID. The app extracts
+///    audio-only from that video using `youtube_explode_dart`.
+/// 3. The ad plays, the user can skip it, and the counter resets.
+/// 4. If the backend is unreachable or returns no ads, the ad break is
+///    silently skipped.
 ///
-/// ## Integration
-/// Wire [onTrackCompleted] into the player's `completedStream` and
-/// [onSkipAd] into the skip-to-next button when an ad is playing.
+/// ## Backend API
+/// ```
+/// GET /ads/next?exclude=id1,id2
+/// Authorization: Bearer <token>
+///
+/// Response: { ad: { id, youtubeId, label, tagline, skippable } | null }
+/// ```
 class AdRollService {
   AdRollService._();
   static final AdRollService instance = AdRollService._();
 
-  static const _songsSinceLastAdKey = 'deemusiq_adroll_songs_since_last';
-  static const _lastAdIndexKey = 'deemusiq_adroll_last_ad_index';
-  static const _impressionsKey = 'deemusiq_adroll_impressions';
+  static const _songsSinceLastAdKey = 'deemusiq_adroll_songs';
+  static const _excludeKey = 'deemusiq_adroll_exclude';
 
-  /// How many songs between ad breaks. Default 6.
+  /// Songs between ad breaks (configurable). Default 6.
   int songsBetweenAds = 6;
 
-  /// Whether ads are enabled at all. Off by default until the user opts in
-  /// or a premium subscription removes them.
+  /// Whether ads are enabled.
   bool enabled = false;
 
   int _songsSinceLastAd = 0;
-  int _lastAdIndex = -1;
+  final Set<String> _excludeIds = {}; // ad IDs already heard this session
 
-  /// Tracks total ad impressions per ad ID for frequency capping.
-  Map<String, int> _impressions = {};
-
-  /// True when an ad is currently playing.
   bool _adPlaying = false;
   bool get isAdPlaying => _adPlaying;
 
-  /// The index in the playlist where the current ad sits, or -1.
-  int _adPlaylistIndex = -1;
-
-  /// Stream that emits when an ad starts/stops. UI can listen to show/hide
-  /// the "Skip Ad" button and ad label.
   final _adStateController = StreamController<bool>.broadcast();
   Stream<bool> get adStateStream => _adStateController.stream;
 
-  /// Built-in DeeMusiq promo ads. Each has an id, a short label, and a URL
-  /// pointing to a hosted audio file. Replace these URLs with real ad-server
-  /// endpoints when a monetisation partner is onboarded.
-  static const _builtInAds = <Map<String, String>>[
-    {
-      'id': 'deemusiq_promo_1',
-      'label': 'DeeMusiq — It\'s a drop day',
-      'tagline': 'Stream African music. Artists keep ownership.',
-      'url': 'https://deemusiq.github.io/deemusiq/assets/audio/promo-dropday.mp3',
-    },
-    {
-      'id': 'deemusiq_promo_2',
-      'label': 'Own your sound on DeeMusiq',
-      'tagline': 'Upload your tracks. Set your price. Get paid.',
-      'url': 'https://deemusiq.github.io/deemusiq/assets/audio/promo-artist.mp3',
-    },
-    {
-      'id': 'deemusiq_promo_3',
-      'label': 'DeeMusiq Wallet — support creators directly',
-      'tagline': 'Push tokens to the artists you love.',
-      'url': 'https://deemusiq.github.io/deemusiq/assets/audio/promo-wallet.mp3',
-    },
-  ];
+  AdSlot? _currentAd;
 
-  /// Initializes state from persistent storage.
+  /// Initialize from persistent storage.
   Future<void> init() async {
     final prefs = KVStoreService.sharedPreferences;
     _songsSinceLastAd = prefs.getInt(_songsSinceLastAdKey) ?? 0;
-    _lastAdIndex = prefs.getInt(_lastAdIndexKey) ?? -1;
-    final raw = prefs.getString(_impressionsKey);
+    final raw = prefs.getString(_excludeKey);
     if (raw != null) {
       try {
-        _impressions = Map<String, int>.from(jsonDecode(raw) as Map);
-      } catch (_) {
-        _impressions = {};
-      }
+        _excludeIds.addAll((jsonDecode(raw) as List).cast<String>());
+      } catch (_) {}
     }
-    AppLogger.info(
-      'AdRollService initialized: songsSinceLastAd=$_songsSinceLastAd, '
-      'enabled=$enabled, ads=${_builtInAds.length} built-in',
-    );
   }
 
-  /// Call this every time a non-ad track finishes playing (i.e. on the
-  /// player's `completedStream` event, AFTER confirming it wasn't an ad).
-  ///
-  /// Returns an ad [AdSlot] if one should be inserted now, or null.
-  AdSlot? onTrackCompleted() {
+  /// Call after every non-ad track completes. Returns an [AdSlot] if an ad
+  /// should be inserted, or null to continue normally.
+  Future<AdSlot?> onTrackCompleted() async {
     if (!enabled) return null;
 
     _songsSinceLastAd++;
     _persistCount();
 
-    AppLogger.info(
-      'AdRoll: songs since last ad = $_songsSinceLastAd / $songsBetweenAds',
-    );
+    if (_songsSinceLastAd < songsBetweenAds) return null;
 
-    if (_songsSinceLastAd >= songsBetweenAds) {
-      _songsSinceLastAd = 0;
-      _persistCount();
-      return _pickAd();
+    _songsSinceLastAd = 0;
+    _persistCount();
+
+    // Fetch next ad from backend.
+    final ad = await _fetchAdFromBackend();
+    if (ad != null) {
+      _currentAd = ad;
+      _excludeIds.add(ad.id);
+      _persistExclude();
+      return ad;
     }
 
-    return null;
+    return null; // no ad available — skip silently
   }
 
-  /// Call when the user taps skip/next while an ad is playing.
+  /// Fetch the next ad from the backend. Returns null if no ads available or
+  /// the backend is unreachable.
+  Future<AdSlot?> _fetchAdFromBackend() async {
+    final api = WalletApiClient.instance;
+    if (!api.isConfigured) return null;
+
+    try {
+      final dio = _client();
+      final exclude = _excludeIds.isNotEmpty
+          ? _excludeIds.join(',')
+          : null;
+
+      final res = await dio.get(
+        '/ads/next',
+        queryParameters: exclude != null ? {'exclude': exclude} : null,
+      );
+
+      final data = res.data as Map<String, dynamic>;
+      final adJson = data['ad'] as Map<String, dynamic>?;
+      if (adJson == null) return null;
+
+      return AdSlot(
+        id: adJson['id'] as String,
+        youtubeId: adJson['youtubeId'] as String,
+        label: adJson['label'] as String,
+        tagline: adJson['tagline'] as String,
+        skippable: (adJson['skippable'] as bool?) ?? true,
+        durationSeconds: 15,
+      );
+    } catch (e) {
+      AppLogger.reportError('AdRoll: backend fetch failed', StackTrace.current);
+      return null; // silent skip — never interrupt playback for ad errors
+    }
+  }
+
+  /// The user skipped the current ad.
   void onSkipAd() {
-    if (!_adPlaying) return;
     _adPlaying = false;
-    _adPlaylistIndex = -1;
+    _currentAd = null;
     _adStateController.add(false);
-    AppLogger.info('AdRoll: user skipped ad');
   }
 
-  /// Call when an ad finishes playing naturally.
+  /// The ad finished playing naturally.
   void onAdCompleted() {
-    if (!_adPlaying) return;
     _adPlaying = false;
-    _adPlaylistIndex = -1;
+    _currentAd = null;
     _adStateController.add(false);
-    AppLogger.info('AdRoll: ad completed naturally');
   }
 
-  /// Marks a new ad as now playing. Call this right after injecting the ad
-  /// media into the player's queue and starting playback.
-  void markAdStarted(int playlistIndex) {
+  /// Call when an ad starts playing to update UI state.
+  void markAdStarted() {
     _adPlaying = true;
-    _adPlaylistIndex = playlistIndex;
     _adStateController.add(true);
   }
 
-  /// Returns the playlist index of the currently-playing ad, or -1.
-  int get currentAdPlaylistIndex => _adPlaylistIndex;
-
-  AdSlot _pickAd() {
-    if (_builtInAds.isEmpty) return null!; // unreachable
-
-    // Frequency cap: try to pick an ad we haven't played recently.
-    // Rotate through the list; if all have been played, reset and pick
-    // the least-impressed one.
-    int nextIndex = (_lastAdIndex + 1) % _builtInAds.length;
-    final ad = _builtInAds[nextIndex];
-
-    _lastAdIndex = nextIndex;
-    _impressions.update(
-      ad['id']!,
-      (v) => v + 1,
-      ifAbsent: () => 1,
-    );
-    _persistImpressions();
-    _persistLastAdIndex();
-
-    return AdSlot(
-      id: ad['id']!,
-      label: ad['label']!,
-      tagline: ad['tagline']!,
-      audioUrl: ad['url']!,
-      skippable: true,
-      durationSeconds: 15, // typical promo length
-    );
-  }
+  /// The currently-playing ad, or null.
+  AdSlot? get currentAd => _currentAd;
 
   void _persistCount() {
     KVStoreService.sharedPreferences.setInt(
@@ -182,37 +156,52 @@ class AdRollService {
     );
   }
 
-  void _persistLastAdIndex() {
-    KVStoreService.sharedPreferences.setInt(_lastAdIndexKey, _lastAdIndex);
+  void _persistExclude() {
+    KVStoreService.sharedPreferences.setString(
+      _excludeKey,
+      jsonEncode(_excludeIds.toList()),
+    );
   }
 
-  void _persistImpressions() {
-    KVStoreService.sharedPreferences.setString(
-      _impressionsKey,
-      jsonEncode(_impressions),
-    );
+  /// Resets the exclude set (e.g. on new session / app restart).
+  void resetExclude() {
+    _excludeIds.clear();
+    _persistExclude();
   }
 
   void dispose() {
     _adStateController.close();
   }
+
+  /// Creates a Dio client pointed at the backend.
+  Dio _client() {
+    return Dio(BaseOptions(
+      baseUrl: PaymentGatewayConfig.backendBaseUrl,
+      connectTimeout: const Duration(seconds: 8),
+      receiveTimeout: const Duration(seconds: 10),
+      headers: {'Content-Type': 'application/json'},
+    ));
+  }
 }
 
-/// An ad ready to be inserted into the playback queue.
+/// An ad fetched from the backend, ready to be inserted into the queue.
 class AdSlot {
-  final String id;
-  final String label;       // e.g. "DeeMusiq — It's a drop day"
-  final String tagline;     // shown in the UI while the ad plays
-  final String audioUrl;    // audio file to play
-  final bool skippable;     // can the user skip this ad?
-  final int durationSeconds;
+  final String id;           // backend ad ID (used for exclude tracking)
+  final String youtubeId;    // 11-char YouTube video ID
+  final String label;        // shown in the player UI
+  final String tagline;      // short tagline
+  final bool skippable;
+  final int durationSeconds; // approximate
 
   const AdSlot({
     required this.id,
+    required this.youtubeId,
     required this.label,
     required this.tagline,
-    required this.audioUrl,
     required this.skippable,
     required this.durationSeconds,
   });
+
+  /// The full YouTube watch URL (resolved by the YouTube engine to audio-only).
+  String get youtubeUrl => 'https://www.youtube.com/watch?v=$youtubeId';
 }
