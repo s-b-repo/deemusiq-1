@@ -6,6 +6,7 @@ import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
 import 'package:deemusiq/extensions/context.dart';
 
 import 'package:deemusiq/provider/user_preferences/user_preferences_provider.dart';
+import 'package:deemusiq/modules/settings/deemusiq_theme.dart';
 
 class DeeMusiqColor extends Color {
   final String name;
@@ -40,14 +41,15 @@ final Set<DeeMusiqColor> colorsMap = {
   DeeMusiqColor(Colors.rose.value, name: "rose"),
 };
 
-final colorSchemeMap = {
+final colorSchemeMap = <String, ColorScheme Function(ThemeMode)>{
   "slate": LegacyColorSchemes.slate,
   "gray": LegacyColorSchemes.gray,
   "zinc": LegacyColorSchemes.zinc,
   "neutral": LegacyColorSchemes.neutral,
   "stone": LegacyColorSchemes.stone,
   "red": LegacyColorSchemes.red,
-  "orange": LegacyColorSchemes.orange,
+  // Override built-in orange with DeeMusiq brand orange.
+  "orange": DeeMusiqTheme.schemeFactory,
   "yellow": LegacyColorSchemes.yellow,
   "green": LegacyColorSchemes.green,
   "blue": LegacyColorSchemes.blue,
