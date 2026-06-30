@@ -16,6 +16,7 @@ import 'package:deemusiq/services/dio/dio.dart';
 import 'package:deemusiq/services/logger/logger.dart';
 import 'package:deemusiq/services/metadata/errors/exceptions.dart';
 import 'package:deemusiq/services/metadata/metadata.dart';
+import 'package:deemusiq/services/metadata/deemusiq_native_plugin.dart';
 import 'package:deemusiq/utils/service_utils.dart';
 import 'package:archive/archive.dart';
 import 'package:pub_semver/pub_semver.dart';
@@ -35,20 +36,14 @@ class MetadataPluginState {
     this.defaultAudioSourcePlugin = -1,
   });
 
-  PluginConfiguration? get defaultMetadataPluginConfig {
-    if (defaultMetadataPlugin < 0 || defaultMetadataPlugin >= plugins.length) {
-      return null;
-    }
-    return plugins[defaultMetadataPlugin];
-  }
+  // DeeMusiq's built-in native provider is always the active metadata + audio
+  // source, so these never return null (the quality-presets/config code relies
+  // on a non-null config).
+  PluginConfiguration? get defaultMetadataPluginConfig =>
+      kDeeMusiqNativePluginConfig;
 
-  PluginConfiguration? get defaultAudioSourcePluginConfig {
-    if (defaultAudioSourcePlugin < 0 ||
-        defaultAudioSourcePlugin >= plugins.length) {
-      return null;
-    }
-    return plugins[defaultAudioSourcePlugin];
-  }
+  PluginConfiguration? get defaultAudioSourcePluginConfig =>
+      kDeeMusiqNativePluginConfig;
 
   factory MetadataPluginState.fromJson(Map<String, dynamic> json) {
     return MetadataPluginState(
@@ -586,50 +581,19 @@ final metadataPluginsProvider =
   MetadataPluginNotifier.new,
 );
 
+// DeeMusiq uses its own built-in, native metadata + audio-source provider that
+// talks to the DeeMusiq backend `/metadata` API — no Spotify, no external
+// plugin bytecode. Both providers return the native plugin directly.
 final metadataPluginProvider = FutureProvider<MetadataPlugin?>(
   (ref) async {
-    final defaultPlugin = await ref.watch(
-      metadataPluginsProvider
-          .selectAsync((data) => data.defaultMetadataPluginConfig),
-    );
     final youtubeEngine = ref.read(youtubeEngineProvider);
-
-    if (defaultPlugin == null) {
-      return null;
-    }
-
-    final pluginsNotifier = ref.read(metadataPluginsProvider.notifier);
-    final pluginByteCode =
-        await pluginsNotifier.getPluginByteCode(defaultPlugin);
-
-    return await MetadataPlugin.create(
-      youtubeEngine,
-      defaultPlugin,
-      pluginByteCode,
-    );
+    return MetadataPlugin.native(youtubeEngine);
   },
 );
 
 final audioSourcePluginProvider = FutureProvider<MetadataPlugin?>(
   (ref) async {
-    final defaultPlugin = await ref.watch(
-      metadataPluginsProvider
-          .selectAsync((data) => data.defaultAudioSourcePluginConfig),
-    );
     final youtubeEngine = ref.watch(youtubeEngineProvider);
-
-    if (defaultPlugin == null) {
-      return null;
-    }
-
-    final pluginsNotifier = ref.read(metadataPluginsProvider.notifier);
-    final pluginByteCode =
-        await pluginsNotifier.getPluginByteCode(defaultPlugin);
-
-    return await MetadataPlugin.create(
-      youtubeEngine,
-      defaultPlugin,
-      pluginByteCode,
-    );
+    return MetadataPlugin.native(youtubeEngine);
   },
 );

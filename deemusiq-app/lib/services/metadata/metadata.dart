@@ -14,6 +14,7 @@ import 'package:deemusiq/collections/routes.dart';
 import 'package:deemusiq/collections/routes.gr.dart';
 import 'package:deemusiq/components/titlebar/titlebar.dart';
 import 'package:deemusiq/models/metadata/metadata.dart';
+import 'package:deemusiq/services/metadata/deemusiq_native_plugin.dart';
 import 'package:deemusiq/services/metadata/apis/localstorage.dart';
 import 'package:deemusiq/services/metadata/endpoints/album.dart';
 import 'package:deemusiq/services/metadata/endpoints/artist.dart';
@@ -179,5 +180,22 @@ class MetadataPlugin {
     track = MetadataPluginTrackEndpoint(hetu);
     user = MetadataPluginUserEndpoint(hetu);
     core = MetadataPluginCore(hetu);
+  }
+
+  /// DeeMusiq's built-in metadata provider: every endpoint is native Dart
+  /// talking to the DeeMusiq backend `/metadata` API (no Spotify, no Hetu
+  /// bytecode). This is what the app uses by default.
+  MetadataPlugin.native(YouTubeEngine youtubeEngine) : hetu = Hetu() {
+    final n = DeeMusiqNativeEndpoints(youtubeEngine);
+    auth = n.auth;
+    audioSource = n.audioSource;
+    artist = n.artist;
+    album = n.album;
+    browse = n.browse;
+    search = n.search;
+    playlist = n.playlist;
+    track = n.track;
+    user = n.user;
+    core = n.core;
   }
 }
