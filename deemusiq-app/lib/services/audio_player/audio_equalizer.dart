@@ -48,7 +48,7 @@ class AudioEqualizer {
     final prefs = KVStoreService.sharedPreferences;
     _enabled = prefs.getBool(_enabledKey) ?? false;
     _preset = prefs.getString(_presetKey) ?? 'Flat';
-    AppLogger.info('Equalizer: enabled=$_enabled preset=$_preset');
+    AppLogger.log.i('Equalizer: enabled=$_enabled preset=$_preset');
   }
 
   /// Enables/disables the equalizer. When disabled, the filter chain is cleared
@@ -61,14 +61,14 @@ class AudioEqualizer {
     } else {
       _clearFilter();
     }
-    AppLogger.info('Equalizer: enabled=$enabled');
+    AppLogger.log.i('Equalizer: enabled=$enabled');
   }
 
   /// Applies a named preset. If the equalizer is disabled, the preset is
   /// stored but not applied until re-enabled.
   Future<void> setPreset(String preset) async {
     if (!_presets.containsKey(preset)) {
-      AppLogger.warn('Equalizer: unknown preset "$preset", ignoring');
+      AppLogger.log.w('Equalizer: unknown preset "$preset", ignoring');
       return;
     }
     _preset = preset;
@@ -76,7 +76,7 @@ class AudioEqualizer {
     if (_enabled) {
       _applyPreset(preset);
     }
-    AppLogger.info('Equalizer: preset=$preset');
+    AppLogger.log.i('Equalizer: preset=$preset');
   }
 
   /// Toggles the equalizer on/off.

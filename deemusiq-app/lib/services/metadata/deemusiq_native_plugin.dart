@@ -501,7 +501,8 @@ class _NativeAuth extends MetadataAuthEndpoint {
   @override
   Future<void> logout() async {}
   @override
-  Stream get authStateStream => _authState;
+  // ignore: invalid_override
+  Stream<dynamic> get authStateStream => _authState;
 }
 
 class _NativeCore extends MetadataPluginCore {

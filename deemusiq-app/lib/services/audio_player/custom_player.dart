@@ -197,6 +197,7 @@ class CustomPlayer extends Player {
 
   /// Seeks to the previous track. Wraps around if loop mode is on and we're
   /// at the start of the playlist.
+  @override
   Future<void> previous() async {
     // If we're more than 3 seconds into the current track, restart it.
     // Otherwise, go to the previous track (Spotify behaviour).

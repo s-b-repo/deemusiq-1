@@ -43,10 +43,11 @@ class DeeMusiqTheme {
 
   /// Dark theme matching the DeeMusiq website.
   static ColorScheme dark() => ColorScheme(
+        brightness: Brightness.dark,
         background: ink,
         foreground: cream,
         primary: orange,
-        primaryForeground: const Color(0xFF1A0D06), // dark text on orange
+        primaryForeground: const Color(0xFF1A0D06),
         secondary: orange2,
         secondaryForeground: cream,
         muted: surface,
@@ -62,12 +63,25 @@ class DeeMusiqTheme {
         destructive: const Color(0xFFEF4444),
         destructiveForeground: cream,
         ring: orange,
-        radius: 0.5,
+        chart1: orange,
+        chart2: orange2,
+        chart3: gold,
+        chart4: orange3,
+        chart5: cream,
+        sidebar: ink2,
+        sidebarForeground: muted,
+        sidebarPrimary: orange,
+        sidebarPrimaryForeground: const Color(0xFF1A0D06),
+        sidebarAccent: surface2,
+        sidebarAccentForeground: cream,
+        sidebarBorder: line,
+        sidebarRing: orange,
       );
 
   /// Light theme (rarely used — DeeMusiq is dark-first). Keeps the brand
   /// orange but on a warm cream background.
   static ColorScheme light() => ColorScheme(
+        brightness: Brightness.light,
         background: cream,
         foreground: ink,
         primary: orange,
@@ -87,7 +101,19 @@ class DeeMusiqTheme {
         destructive: const Color(0xFFEF4444),
         destructiveForeground: Colors.white,
         ring: orange,
-        radius: 0.5,
+        chart1: orange,
+        chart2: orange2,
+        chart3: gold,
+        chart4: orange3,
+        chart5: ink,
+        sidebar: const Color(0xFFF0EAE4),
+        sidebarForeground: muted2,
+        sidebarPrimary: orange,
+        sidebarPrimaryForeground: Colors.white,
+        sidebarAccent: const Color(0xFFF0EAE4),
+        sidebarAccentForeground: ink,
+        sidebarBorder: const Color(0x20FF783C),
+        sidebarRing: orange,
       );
 
   // ── Theme builders (match ShadcnFlutter's LegacyColorSchemes pattern) ──
