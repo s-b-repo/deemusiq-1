@@ -86,6 +86,7 @@
   /* ---------- download buttons ---------- */
   document.querySelectorAll(".dl[data-platform]").forEach(function (a) {
     var p = a.getAttribute("data-platform");
+    if (!p) return;
     var url = DOWNLOADS[p];
     if (url) {
       a.setAttribute("href", url);
@@ -103,7 +104,8 @@
         var msg = document.getElementById("cf-msg");
         if (topic) topic.value = "Listener / customer";
         if (msg) msg.value = "I'd like early access to the DeeMusiq app for " + p + ".";
-        document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
+        var contactEl = document.getElementById("contact");
+        if (contactEl) contactEl.scrollIntoView({ behavior: "smooth" });
       });
     }
   });
@@ -126,19 +128,22 @@
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
       if (!form.reportValidity()) return;
-      // Use the form controls collection — `form.name` would resolve to the
-      // form's own `name` attribute, not the <input name="name"> field.
       var els = form.elements;
-      var name = (els.namedItem("name").value || "").trim();
-      var email = (els.namedItem("email").value || "").trim();
-      var topic = els.namedItem("topic").value;
-      var message = (els.namedItem("message").value || "").trim();
-      var subject = "[DeeMusiq] " + topic + " — " + name;
+      var nameField = els.namedItem("name");
+      var emailField = els.namedItem("email");
+      var topicField = els.namedItem("topic");
+      var messageField = els.namedItem("message");
+      if (!nameField || !emailField || !topicField || !messageField) return;
+      var nameVal = (nameField.value || "").trim();
+      var emailVal = (emailField.value || "").trim();
+      var topicVal = topicField.value || "";
+      var messageVal = (messageField.value || "").trim();
+      var subject = "[DeeMusiq] " + topicVal + " — " + nameVal;
       var body =
-        "Name: " + name + "\n" +
-        "Email: " + email + "\n" +
-        "I am a: " + topic + "\n\n" +
-        message + "\n";
+        "Name: " + nameVal + "\n" +
+        "Email: " + emailVal + "\n" +
+        "I am a: " + topicVal + "\n\n" +
+        messageVal + "\n";
       window.location.href =
         "mailto:" + CONTACT_EMAIL +
         "?subject=" + encodeURIComponent(subject) +
